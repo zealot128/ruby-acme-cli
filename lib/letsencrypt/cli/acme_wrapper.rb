@@ -108,10 +108,9 @@ class AcmeWrapper
     if @options[:test]
       "https://acme-staging.api.letsencrypt.org"
     else
-      ""
+      "https://acme-v01.api.letsencrypt.org"
     end
   end
-
 
   def account_key
     @account_key ||= find_or_create_pkey(@options[:account_key], "account key", @options[:key_length] || 4096)

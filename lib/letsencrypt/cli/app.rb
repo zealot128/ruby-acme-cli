@@ -62,6 +62,13 @@ module Letsencrypt
         wrapper.cert(domains)
       end
 
+			map %w[--version -v] => :__print_version
+
+			desc "--version, -v", "print the version"
+			def __print_version
+				puts Letsencrypt::Cli::VERSION
+			end
+
       private
 
       def wrapper
