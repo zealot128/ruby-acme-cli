@@ -1,0 +1,16 @@
+language: ruby
+sudo: false
+cache: bundler
+
+rvm:
+  - 2.2
+  - 2.1
+  # - 2.0
+
+# before_script:
+#   - "bundle exec rake db:schema:load RAILS_ENV=test"
+
+script:
+  - bundle exec rspec
+  # - ./exe/letsencrypt-cli
+
