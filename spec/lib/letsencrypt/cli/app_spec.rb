@@ -4,6 +4,22 @@ require "tmpdir"
 
 module Letsencrypt::Cli
   describe "App" do
+    let(:app) { App.new }
+    specify "register" do
+      Timecop.freeze Time.parse("2015-12-05 12:00") do
+        VCR.use_cassette("register") do
+          key_path = File.join(@current_dir, "account_key.pem")
+          out = capture(:stdout) {
+            app.invoke "register", ["info@stefanwienert.de"],
+              color: false,
+              account_key: key_path
+          }
+          expect(out).to include "Account created"
+          expect(File.exists?(key_path)).to be == true
+        end
+      end
+    end
+
     specify "cert " do
       Timecop.freeze Time.parse("2015-12-05 12:00") do
         cert = <<-DOC.strip_heredoc
@@ -39,7 +55,6 @@ module Letsencrypt::Cli
         DOC
         cert_path = File.join(@current_dir, "cert.pem")
         File.write(cert_path, cert)
-        app = App.new
         out = capture(:stdout) do
           expect {
             app.invoke("cert", ['example.com'], certificate_path: cert_path, color: false)

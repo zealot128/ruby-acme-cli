@@ -12,7 +12,15 @@ module Letsencrypt
       desc 'register EMAIL', 'Register account'
       method_option :key_length, desc: "Length of generated private key", type: :numeric, default: 4096
       def register(email)
-        registration = wrapper.client.register(contact: email)
+        if email.nil? || email == ""
+          log "no E-Mail specified!", :fatal
+          exit 1
+        end
+        if !email[/.*@.*/]
+          log "not an email", :fatal
+          exit 1
+        end
+        registration = wrapper.client.register(contact: "mailto:" + email)
         registration.agree_terms
         wrapper.log "Account created, Terms accepted"
       end

@@ -1,0 +1,138 @@
+---
+http_interactions:
+- request:
+    method: head
+    uri: https://acme-staging.api.letsencrypt.org/acme/new-reg
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/problem+json
+      Allow:
+      - POST
+      Replay-Nonce:
+      - mpzudSBaNVzhLZC7yu9utZ0-dJrVmDRirPVMt--yroY
+      Content-Length:
+      - '0'
+      Expires:
+      - Sat, 05 Dec 2015 11:17:58 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Sat, 05 Dec 2015 11:17:58 GMT
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Sat, 05 Dec 2015 11:00:00 GMT
+- request:
+    method: post
+    uri: https://acme-staging.api.letsencrypt.org/acme/new-reg
+    body:
+      encoding: UTF-8
+      string: '{"header":{"alg":"RS256","jwk":{"kty":"RSA","e":"AQAB","n":"rRKxhFQaq9jHynPjJPSZsKWNd_B6HqL1BznBUvp3ifCBwk7xSGQmc_kdTE5-UKEyYubcfITMRQgYPENonh831nA4jBpPLm3MJ9YzIy9szL_ZQCT7pJry8OWxltv0GDZeW4jA3XLR8EDVdJFHMG_B9GgYA14ioVQCnRgae-DHPMaojwCrZFZ1IVhyYrOnHC9GBmICTTXb2HijLbGQJuq7z78bVHjoyhUszdAtVkw_zOTpuXDmqMG0IUr3a9F3j-Kb9sv4bQE47qF65ztbvIV8fZzkfO_rmvRbc_HHHnik4rU_KXsXUq0I9m4AxB_yP5CxdrZeybtwpWxPDRDH7bCwY_c34r5OvJz80-Twy9FKtNx3JSz7wC8gPlFMq0poMl7xjjsnXhAFFVZ1tBCRbmLbRukKEXe8TquQBRkLbfUIIRA--YNHdorhYCdCORe9szLfO69mYw7244PbGjqoB3Eg521yTJzy9WuPwx7H3RmzfT9lNnM3NSFytdVnUs3bgYcS9Og8OMSAGSPSPV7pFBlZEIUVZ0AU1nxUZZ4LhyKARqySPjK4iswOSQvSx32FSjAD4HlMo1lzoApxPeRDzsFZjvRsBq6BM564WS__RFJDmVTjIUZ8aChlB3P9Of9EdS23Mec_qErGh0NbCEexqZ98Oicje_5Yi6IefResoRlKTMs"}},"protected":"eyJub25jZSI6Im1wenVkU0JhTlZ6aExaQzd5dTl1dFowLWRKclZtRFJpclBWTXQtLXlyb1kifQ","payload":"eyJyZXNvdXJjZSI6Im5ldy1yZWciLCJjb250YWN0IjpbIm1haWx0bzppbmZvQHN0ZWZhbndpZW5lcnQuZGUiXX0","signature":"bU4EiTrGjGRSl9VJS0jAT730AWGPw6rg2P1FxPqV7m-kqNz42Ws9b9OfUiQaU2y0T57YcQOQs-Cfk4OTNWWQwQwCWIWLxcX1P4_8la37Vww6ZjKmCQvrRXogvRcmjasbgy9bwMe_bBzyvVudAAG8CTsslVmS762nhYX4fZ8Q-ShIn-zodofer4AK-1zG9CJeK0S1ACDJpKU54z2Lb_VKyKI2IgPTHRCRLEEmmWBC62T5di6vv999vbBpLZbEzCYs9AtMyukrLeRAUx5f9QcPDAMdC4Utt8oJFsEfUoa-1NDjD8ESaHvzibo9Of76kzAdoxmIYc1yYyT0IcMErWdBxU_he9x-EAqmr67prf5vqWxqSHQyTJ7YcDgurpRJvCwTz7J9w4i_aivDhZY8aj5bwCLNzNmpF2kSKSgkCWVRIuOJpGo6v0uka-SKydTAq7yHu0MIlEAZjmkyOsc29pl8uIkyVrSFV3F1yDsRrVsfDjiG4n2T61wluda7Jp0Rla5XbCot_sAECkeW4MSCh3QLcgggQ0-Rrgje1RpowHQULYYgOusfZeNGht-ONGvpKqKBAQNWyNdOlZqTn9YS4j2YhJDDH7j4rMSwwtbfj_8zFQmrxZ-zlaGpXReuCMfpkSLREtXa9rmdsj8dQlJ2-dhCUFDMYbI7uaQ_cLZ24J_-SIk"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '850'
+      Link:
+      - <https://acme-staging.api.letsencrypt.org/acme/new-authz>;rel="next"
+      - <https://letsencrypt.org/documents/LE-SA-v1.0.1-July-27-2015.pdf>;rel="terms-of-service"
+      Location:
+      - https://acme-staging.api.letsencrypt.org/acme/reg/100706
+      Replay-Nonce:
+      - WTeXIYjQByNs1rsLaSAqjqzrr26Shsk6E1BjC24-EQY
+      X-Frame-Options:
+      - DENY
+      Strict-Transport-Security:
+      - max-age=604800
+      Expires:
+      - Sat, 05 Dec 2015 11:18:00 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Sat, 05 Dec 2015 11:18:00 GMT
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"id":100706,"key":{"kty":"RSA","n":"rRKxhFQaq9jHynPjJPSZsKWNd_B6HqL1BznBUvp3ifCBwk7xSGQmc_kdTE5-UKEyYubcfITMRQgYPENonh831nA4jBpPLm3MJ9YzIy9szL_ZQCT7pJry8OWxltv0GDZeW4jA3XLR8EDVdJFHMG_B9GgYA14ioVQCnRgae-DHPMaojwCrZFZ1IVhyYrOnHC9GBmICTTXb2HijLbGQJuq7z78bVHjoyhUszdAtVkw_zOTpuXDmqMG0IUr3a9F3j-Kb9sv4bQE47qF65ztbvIV8fZzkfO_rmvRbc_HHHnik4rU_KXsXUq0I9m4AxB_yP5CxdrZeybtwpWxPDRDH7bCwY_c34r5OvJz80-Twy9FKtNx3JSz7wC8gPlFMq0poMl7xjjsnXhAFFVZ1tBCRbmLbRukKEXe8TquQBRkLbfUIIRA--YNHdorhYCdCORe9szLfO69mYw7244PbGjqoB3Eg521yTJzy9WuPwx7H3RmzfT9lNnM3NSFytdVnUs3bgYcS9Og8OMSAGSPSPV7pFBlZEIUVZ0AU1nxUZZ4LhyKARqySPjK4iswOSQvSx32FSjAD4HlMo1lzoApxPeRDzsFZjvRsBq6BM564WS__RFJDmVTjIUZ8aChlB3P9Of9EdS23Mec_qErGh0NbCEexqZ98Oicje_5Yi6IefResoRlKTMs","e":"AQAB"},"contact":["mailto:info@stefanwienert.de"],"initialIp":"148.251.82.119","createdAt":"2015-12-05T11:17:59.99076609Z"}'
+    http_version: 
+  recorded_at: Sat, 05 Dec 2015 11:00:00 GMT
+- request:
+    method: post
+    uri: https://acme-staging.api.letsencrypt.org/acme/reg/100706
+    body:
+      encoding: UTF-8
+      string: '{"header":{"alg":"RS256","jwk":{"kty":"RSA","e":"AQAB","n":"rRKxhFQaq9jHynPjJPSZsKWNd_B6HqL1BznBUvp3ifCBwk7xSGQmc_kdTE5-UKEyYubcfITMRQgYPENonh831nA4jBpPLm3MJ9YzIy9szL_ZQCT7pJry8OWxltv0GDZeW4jA3XLR8EDVdJFHMG_B9GgYA14ioVQCnRgae-DHPMaojwCrZFZ1IVhyYrOnHC9GBmICTTXb2HijLbGQJuq7z78bVHjoyhUszdAtVkw_zOTpuXDmqMG0IUr3a9F3j-Kb9sv4bQE47qF65ztbvIV8fZzkfO_rmvRbc_HHHnik4rU_KXsXUq0I9m4AxB_yP5CxdrZeybtwpWxPDRDH7bCwY_c34r5OvJz80-Twy9FKtNx3JSz7wC8gPlFMq0poMl7xjjsnXhAFFVZ1tBCRbmLbRukKEXe8TquQBRkLbfUIIRA--YNHdorhYCdCORe9szLfO69mYw7244PbGjqoB3Eg521yTJzy9WuPwx7H3RmzfT9lNnM3NSFytdVnUs3bgYcS9Og8OMSAGSPSPV7pFBlZEIUVZ0AU1nxUZZ4LhyKARqySPjK4iswOSQvSx32FSjAD4HlMo1lzoApxPeRDzsFZjvRsBq6BM564WS__RFJDmVTjIUZ8aChlB3P9Of9EdS23Mec_qErGh0NbCEexqZ98Oicje_5Yi6IefResoRlKTMs"}},"protected":"eyJub25jZSI6IldUZVhJWWpRQnlOczFyc0xhU0FxanF6cnIyNlNoc2s2RTFCakMyNC1FUVkifQ","payload":"eyJyZXNvdXJjZSI6InJlZyIsImFncmVlbWVudCI6Imh0dHBzOi8vbGV0c2VuY3J5cHQub3JnL2RvY3VtZW50cy9MRS1TQS12MS4wLjEtSnVseS0yNy0yMDE1LnBkZiJ9","signature":"VtesitWygoiOcepKx5pDzxRX-Dusg6pJcQwlvk0cfB0ze-EGThlGrxG2zWpyxmsZDSy8ScQx3rmEkYUhjvHSRcsGN6PH9xIWk5j3N7tcv0lTZZukzJ95BSMfL6l95Enxna90j0Aym3bKHfvwgLpLz-RWy7fX6jIv2e0DS8RRiR_QcZ1T5wPlokUlrHNxTByL3oupMwUFxiZkt_cOU4FncLLz84ynemXB-ESeeYBdBaKXu-0qJGCTZcZyxlsoueSN4-pp-Kj-AuUVk3CGEGvLllI2YytlwIUiXCf7yzccNSSD1ih2gZgEkR7-LydW-bROw8jIykGKUdt4hOrYfhJl5Kz9nOKJkqlQY76jPWSn0QInj7jNG1YHY-__Gb00zFVGXUVXQKn7GzQfcY4OBmcNvJv9WQB8lwVesy_o8rUFWE48pl_ud_Xw6H99rnu1_pqMn8KL3E5RZBEhR1XNaivbWsZ3LDGn9wreiVg0UXx3cDnByhOeja3KJSTACcHCNmw_prtBcvNyZBt5AZxukW6CzvrKRhyUAp8BqzBuMnMeqRydlHK2LkbpstUyCNWCqDQQ4-c125PLawAiDFyEauWHeSjqIi9LiBsbOfDFtHO9DtJvVca0VLC27HkszzqLe5gqo63E3lOftAnzhOHEvINLJpDhwQ4zDypQxXszQOCnFIQ"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '919'
+      Link:
+      - <https://acme-staging.api.letsencrypt.org/acme/new-authz>;rel="next"
+      - <https://letsencrypt.org/documents/LE-SA-v1.0.1-July-27-2015.pdf>;rel="terms-of-service"
+      Replay-Nonce:
+      - OpH5C_ZhjWIYmEkDGeqO27z9Na5g9lZQY08UCklZdy4
+      Expires:
+      - Sat, 05 Dec 2015 11:18:00 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Sat, 05 Dec 2015 11:18:00 GMT
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"id":100706,"key":{"kty":"RSA","n":"rRKxhFQaq9jHynPjJPSZsKWNd_B6HqL1BznBUvp3ifCBwk7xSGQmc_kdTE5-UKEyYubcfITMRQgYPENonh831nA4jBpPLm3MJ9YzIy9szL_ZQCT7pJry8OWxltv0GDZeW4jA3XLR8EDVdJFHMG_B9GgYA14ioVQCnRgae-DHPMaojwCrZFZ1IVhyYrOnHC9GBmICTTXb2HijLbGQJuq7z78bVHjoyhUszdAtVkw_zOTpuXDmqMG0IUr3a9F3j-Kb9sv4bQE47qF65ztbvIV8fZzkfO_rmvRbc_HHHnik4rU_KXsXUq0I9m4AxB_yP5CxdrZeybtwpWxPDRDH7bCwY_c34r5OvJz80-Twy9FKtNx3JSz7wC8gPlFMq0poMl7xjjsnXhAFFVZ1tBCRbmLbRukKEXe8TquQBRkLbfUIIRA--YNHdorhYCdCORe9szLfO69mYw7244PbGjqoB3Eg521yTJzy9WuPwx7H3RmzfT9lNnM3NSFytdVnUs3bgYcS9Og8OMSAGSPSPV7pFBlZEIUVZ0AU1nxUZZ4LhyKARqySPjK4iswOSQvSx32FSjAD4HlMo1lzoApxPeRDzsFZjvRsBq6BM564WS__RFJDmVTjIUZ8aChlB3P9Of9EdS23Mec_qErGh0NbCEexqZ98Oicje_5Yi6IefResoRlKTMs","e":"AQAB"},"contact":["mailto:info@stefanwienert.de"],"agreement":"https://letsencrypt.org/documents/LE-SA-v1.0.1-July-27-2015.pdf","initialIp":"148.251.82.119","createdAt":"2015-12-05T11:17:59Z"}'
+    http_version: 
+  recorded_at: Sat, 05 Dec 2015 11:00:00 GMT
+recorded_with: VCR 3.0.0

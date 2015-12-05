@@ -1,7 +1,15 @@
 require 'simplecov'
 require 'timecop'
+require 'vcr'
+require 'webmock'
+require 'pry'
 SimpleCov.start
 Dir['spec/support/**/*'].each {|f| load f }
+
+VCR.configure do |config|
+  config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
+  config.hook_into :webmock # or :fakeweb
+end
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -23,7 +31,7 @@ RSpec.configure do |config|
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
   end
-
+  config.backtrace_exclusion_patterns << %r{/gems/}
 
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
