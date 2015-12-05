@@ -12,6 +12,7 @@ module Letsencrypt::Cli
           out = capture(:stdout) {
             app.invoke "register", ["info@stefanwienert.de"],
               color: false,
+              test: true,
               account_key: key_path
           }
           expect(out).to include "Account created"
@@ -67,6 +68,7 @@ module Letsencrypt::Cli
             stdout = capture(:stdout) {
               app.invoke "authorize", ["stefanwienert.de"],
               color: false,
+              test: true,
               account_key: key_path,
               webroot_path: webroot_path
             }
@@ -118,6 +120,7 @@ module Letsencrypt::Cli
             stdout = capture(:stdout) {
             app.invoke "cert", ["stefanwienert.de"],
               color: false,
+              test: true,
               certificate_path: cert_path,
               private_key_path: private_key_path,
               fullchain_path: fullchain_path,
@@ -174,7 +177,7 @@ module Letsencrypt::Cli
         File.write(cert_path, cert)
         out = capture(:stdout) do
           expect {
-            app.invoke("cert", ['example.com'], certificate_path: cert_path, color: false)
+            app.invoke("cert", ['example.com'], certificate_path: cert_path, color: false, test: true)
           }.to raise_error(SystemExit)
         end
         expect(out).to include 'still valid till 2016-03-03'

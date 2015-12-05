@@ -5,7 +5,7 @@ module Letsencrypt
   module Cli
     class App < Thor
       class_option :account_key, desc: "Path to private key file (will be created if not exists)", aliases: "-a", default: 'account_key.pem'
-      class_option :production, desc: "Use production url of letsencrypt instead of staging server", aliases: "-p", type: :boolean
+      class_option :test, desc: "Use staging url of Letsencrypt instead of production server", aliases: "-t", type: :boolean
       class_option :log_level, desc: "Log Level (debug, info, warn, error, fatal)", default: "info"
       class_option :color, desc: "Disable colorize", default: true, type: :boolean
 

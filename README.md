@@ -15,7 +15,7 @@ Yet another Letsencrypt client using Ruby.
 
 ## Usage
 
-Specify ``-p`` to use letsencrypt production server. Without it, all requests are called against the staging server. (live server has some hard rate limiting, so use the staging server for playing first).
+Specify ``-t`` to use Letsencrypt test server. Without it, all requests are called against the production server, that might have same more strict rate limiting. If you are just toying around, add the -t flag.
 
 ```bash
 # show all commands
@@ -26,19 +26,19 @@ letsencrypt-cli help
 letsencrypt-cli help cert
 
 # creates account_key.json in current_dir
-letsencrypt-cli register -p myemail@example.com
+letsencrypt-cli register -t myemail@example.com
 
 
 # authorize one or more domains/subdomains
-letsencrypt-cli authorize -p --webroot-path /var/www/default example.com www.example.com somedir.example.com
+letsencrypt-cli authorize -t --webroot-path /var/www/default example.com www.example.com somedir.example.com
 
 # experimental: authorize all server_names in /etc/nginx/sites-enabled/*
-letsencrypt-cli authorize_all -p --webroot-path /var/www/default
+letsencrypt-cli authorize_all -t --webroot-path /var/www/default
 
 
 # create a certificate for before authorized domains.
 # the first domain will be the cn subject. All other are subjectAlternateName
-letsencrypt-cli cert example.com www.exaple.com somdir.example.com
+letsencrypt-cli cert -t example.com www.example.com somdir.example.com
 # will create key.pem fullchain.pem chain.pem and cert.pem
 ```
 

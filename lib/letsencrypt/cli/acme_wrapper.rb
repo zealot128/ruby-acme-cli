@@ -105,10 +105,10 @@ class AcmeWrapper
   end
 
   def endpoint
-    if @options[:production]
-      ""
+    if @options[:test]
+      "https://acme-staging.api.letsencrypt.org"
     else
-      'https://acme-staging.api.letsencrypt.org'
+      ""
     end
   end
 
