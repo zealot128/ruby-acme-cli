@@ -67,23 +67,20 @@ letsencrypt-cli help cert
 # creates account_key.json in current_dir
 letsencrypt-cli register -t myemail@example.com
 
-
 # authorize one or more domains/subdomains
 letsencrypt-cli authorize -t --webroot-path /var/www/default example.com www.example.com somedir.example.com
 
 # experimental: authorize all server_names in /etc/nginx/sites-enabled/*
 letsencrypt-cli authorize_all -t --webroot-path /var/www/default
 
-
-# create a certificate for before authorized domains.
+# create a certificate for domains that are already authorized within the last minutes (1h-2h I think)
 # the first domain will be the cn subject. All other are subjectAlternateName
 # if cert.pem already exists, will only create a new one if the old is expired
 # (30 days before expiration) -> see full help
 letsencrypt-cli help cert
 
 letsencrypt-cli cert -t example.com www.example.com somdir.example.com
-# will create key.pem fullchain.pem chain.pem and cert.pem
-
+# will create key.pem fullchain.pem chain.pem and cert.pem in current directory
 
 # checks validation date of given certificate. Exists non-zero if not exists or
 # will expire in 30 days
