@@ -38,13 +38,21 @@ letsencrypt-cli authorize_all -t --webroot-path /var/www/default
 
 # create a certificate for before authorized domains.
 # the first domain will be the cn subject. All other are subjectAlternateName
+# if cert.pem already exists, will only create a new one if the old is expired
+# (30 days before expiration) -> see full help
+letsencrypt-cli help cert
+
 letsencrypt-cli cert -t example.com www.example.com somdir.example.com
 # will create key.pem fullchain.pem chain.pem and cert.pem
+
+
+# checks validation date of given certificate. Exists non-zero if not exists or
+# will expire in 30 days
+letsencrypt-cli check --days-valid 30 cert.pem
 ```
 
 
 ## Example integration nginx:
-
 
 ```nginx
 server {
