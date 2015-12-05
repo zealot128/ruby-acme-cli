@@ -1,6 +1,7 @@
 # Letsencrypt::Cli
 
 [![Build Status](https://travis-ci.org/zealot128/ruby-letsencrypt-cli.svg?branch=travis)](https://travis-ci.org/zealot128/ruby-letsencrypt-cli)
+[![Gem Version](https://badge.fury.io/rb/letsencrypt-cli.svg)](https://badge.fury.io/rb/letsencrypt-cli)
 
 Yet another Letsencrypt client using Ruby.
 
