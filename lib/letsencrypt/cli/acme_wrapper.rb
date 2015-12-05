@@ -1,6 +1,5 @@
 require 'json'
 require 'acme-client'
-require 'pry'
 
 class AcmeWrapper
   def initialize(options)
