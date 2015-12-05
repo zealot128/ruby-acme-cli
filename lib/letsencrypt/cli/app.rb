@@ -42,11 +42,13 @@ module Letsencrypt
             rc = 1
           end
         end
-        exit rc
+        if rc != 0
+          exit rc
+        end
       end
 
       desc "cert [DOMAINS]", "create certificate and private key pair for domains. The first domain is the main CN domain, the reset will be added as SAN. If the given certificate-path already exists, script will exit non-zero if the certificate is still valid until the given number of days before."
-      method_option :private_key_file, desc: "Path to private key. Will be created if non existant", aliases: '-k', default: 'key.pem'
+      method_option :private_key_path, desc: "Path to private key. Will be created if non existant", aliases: '-k', default: 'key.pem'
       method_option :key_length, desc: "Length of private key", default: 2048, type: :numeric
       method_option :fullchain_path, desc: "Path to fullchain certificate (Nginx) (will be overwritten if exists!)", aliases: '-f', default: 'fullchain.pem'
       method_option :certificate_path, desc: "Path to certificate (Apache)", aliases: '-c', default: 'cert.pem'

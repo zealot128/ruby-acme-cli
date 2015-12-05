@@ -44,6 +44,7 @@ class AcmeWrapper
     end
     if challenge.verify_status == 'valid'
       log "Authorization successful for #{domain.green}"
+      File.unlink(challenge_file)
       true
     else
       log "Authorization error for #{domain.red}", :error
@@ -55,7 +56,7 @@ class AcmeWrapper
   def cert(domains)
     return if certificate_exists_and_valid?
     csr = OpenSSL::X509::Request.new
-    certificate_private_key = find_or_create_pkey(@options[:private_key_file], "private key", @options[:key_length] || 2048)
+    certificate_private_key = find_or_create_pkey(@options[:private_key_path], "private key", @options[:key_length] || 2048)
 
     csr.subject = OpenSSL::X509::Name.new([
       # ['C',             options[:country], OpenSSL::ASN1::PRINTABLESTRING],

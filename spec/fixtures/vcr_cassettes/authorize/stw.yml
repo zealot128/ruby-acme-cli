@@ -1,0 +1,228 @@
+---
+http_interactions:
+- request:
+    method: head
+    uri: https://acme-staging.api.letsencrypt.org/acme/new-authz
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/problem+json
+      Allow:
+      - POST
+      Replay-Nonce:
+      - 8VigoErfBu45AikL7gGfx4cBOHyfBCdqu4RrIJ7sJlA
+      Content-Length:
+      - '0'
+      Expires:
+      - Sat, 05 Dec 2015 14:53:32 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Sat, 05 Dec 2015 14:53:32 GMT
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Sat, 05 Dec 2015 14:45:00 GMT
+- request:
+    method: post
+    uri: https://acme-staging.api.letsencrypt.org/acme/new-authz
+    body:
+      encoding: UTF-8
+      string: '{"header":{"alg":"RS256","jwk":{"kty":"RSA","e":"AQAB","n":"sVV526Ht43vXCoJjKp4VN1wzDclaIfbyWt_XL8apRbORvB00cwznEvLdTd1oeeZ5_PNxHNU6GIG1eWE9Qsl2TdiZe67gfzuoXoKKPU3m8SlLyzM84c-GhUqGKhfHo0FDgwxu5efReZOUiUKOGJ-m1wBYJ1zwAx8qcwCnrtXlY_DlzO6S1_Y9-sxZXuy7CSM3OWl7S83IMOvfCY6Cp-ZLSJLVQpLZIDpDMDVKm_Gl9Rs_jhQIr7I0iSFmqbbzhVX9F0gGdM5rUgJzDCUanQaulTF-i5hJgXbmdLWu_Gtaz9rMlPQdhUJXCc5_9IZgw5KYEryL_GewMuHYeh3nUOI1yw"}},"protected":"eyJub25jZSI6IjhWaWdvRXJmQnU0NUFpa0w3Z0dmeDRjQk9IeWZCQ2RxdTRScklKN3NKbEEifQ","payload":"eyJyZXNvdXJjZSI6Im5ldy1hdXRoeiIsImlkZW50aWZpZXIiOnsidHlwZSI6ImRucyIsInZhbHVlIjoic3RlZmFud2llbmVydC5kZSJ9fQ","signature":"R--Fio6aqexZwbepBpC94rEvl-SUKc2_fPUepfLjzpLC_kArED05cEf1Ipw768kIBq4DBprQz6tPBGkHOtkPbOER8a-nHnSjr7hNNs7j35ZJUXq63yV9xrfUcZ12kU9KgVaYbXIAgdvEfScPEeZP_VvGM9FtXYGX5HGPuLgo8O9KLOMzGdoTSpXNyvYyrifXQoF0EHL7bFU8a8w3JZ85t207X8uuHUzNuF0TmU4qkeCI7Mx4JRviPwplhQ5E9bE3N8ufNMetVHQkHpGVuSJb9ZrDjkLF6uaXsO7RWtJPYQM-1N-0mKc36rrnZ8YgdyAaygS7a__-MTyn7qsxJy6iAg"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '573'
+      Link:
+      - <https://acme-staging.api.letsencrypt.org/acme/new-cert>;rel="next"
+      Location:
+      - https://acme-staging.api.letsencrypt.org/acme/authz/S9B6H5BxBmtMUFbwz-dE2tws_cdhtoyyUzq4egEW4z4
+      Replay-Nonce:
+      - dlgh3wtCv7Wx505tszPob4CF-7RjeA3maJvMzSinwmU
+      X-Frame-Options:
+      - DENY
+      Strict-Transport-Security:
+      - max-age=604800
+      Expires:
+      - Sat, 05 Dec 2015 14:53:33 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Sat, 05 Dec 2015 14:53:33 GMT
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"identifier":{"type":"dns","value":"stefanwienert.de"},"status":"pending","expires":"2015-12-12T14:53:33.0247945Z","challenges":[{"type":"tls-sni-01","status":"pending","uri":"https://acme-staging.api.letsencrypt.org/acme/challenge/S9B6H5BxBmtMUFbwz-dE2tws_cdhtoyyUzq4egEW4z4/806463","token":"OcbgMnDRHvkOs88ad26gMgLaCHHXjkxXCFGIpKjPHVU"},{"type":"http-01","status":"pending","uri":"https://acme-staging.api.letsencrypt.org/acme/challenge/S9B6H5BxBmtMUFbwz-dE2tws_cdhtoyyUzq4egEW4z4/806464","token":"1FKNadAIpXOJG04z_upuJmxYIqGaEDB3Rm3-ukXqexE"}],"combinations":[[1],[0]]}'
+    http_version: 
+  recorded_at: Sat, 05 Dec 2015 14:45:00 GMT
+- request:
+    method: post
+    uri: https://acme-staging.api.letsencrypt.org/acme/challenge/S9B6H5BxBmtMUFbwz-dE2tws_cdhtoyyUzq4egEW4z4/806464
+    body:
+      encoding: UTF-8
+      string: '{"header":{"alg":"RS256","jwk":{"kty":"RSA","e":"AQAB","n":"sVV526Ht43vXCoJjKp4VN1wzDclaIfbyWt_XL8apRbORvB00cwznEvLdTd1oeeZ5_PNxHNU6GIG1eWE9Qsl2TdiZe67gfzuoXoKKPU3m8SlLyzM84c-GhUqGKhfHo0FDgwxu5efReZOUiUKOGJ-m1wBYJ1zwAx8qcwCnrtXlY_DlzO6S1_Y9-sxZXuy7CSM3OWl7S83IMOvfCY6Cp-ZLSJLVQpLZIDpDMDVKm_Gl9Rs_jhQIr7I0iSFmqbbzhVX9F0gGdM5rUgJzDCUanQaulTF-i5hJgXbmdLWu_Gtaz9rMlPQdhUJXCc5_9IZgw5KYEryL_GewMuHYeh3nUOI1yw"}},"protected":"eyJub25jZSI6ImRsZ2gzd3RDdjdXeDUwNXRzelBvYjRDRi03UmplQTNtYUp2TXpTaW53bVUifQ","payload":"eyJyZXNvdXJjZSI6ImNoYWxsZW5nZSIsInR5cGUiOiJodHRwLTAxIiwia2V5QXV0aG9yaXphdGlvbiI6IjFGS05hZEFJcFhPSkcwNHpfdXB1Sm14WUlxR2FFREIzUm0zLXVrWHFleEUuM3BMWG5lLVcyTGUxREV4Yk5tQmladDhWS2dhNExCRG12TG41YnA2MTduMCJ9","signature":"IyQpvqquSZcXN2J65jQYY76MnfbuWkq_aaE1lozH6dT5eUS5zCFLc5GYiT4NdMeKVTAw0ECGs5C3j5ozyuoCzjBdCf-S9MWWrXh4OstcKC3rBiAoet0chzrSZK0llCOUo4BF-dAtnCUCx9KULFftShJ3cnT_i3etoOr9DcK-RO1-UuKYp0sIhuIXhzKiU70VXsbM1FbaCgWBxEW5O72bBuEhXlPOajqMU-lC8cRG_4vroL8A9alXTD2iM3H2uoOHKJ45ufd5NLUSEjt2DEkw95SHH4jyN2G-nswFdhKoffCUPtHv6Vp-gkhXvHAXumRcBqK0RsTApsQMA51u4KwDqw"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '315'
+      Link:
+      - <https://acme-staging.api.letsencrypt.org/acme/authz/S9B6H5BxBmtMUFbwz-dE2tws_cdhtoyyUzq4egEW4z4>;rel="up"
+      Location:
+      - https://acme-staging.api.letsencrypt.org/acme/challenge/S9B6H5BxBmtMUFbwz-dE2tws_cdhtoyyUzq4egEW4z4/806464
+      Replay-Nonce:
+      - rhjXda_8LCUEmas44prOIWYPqbKkz3q4DgvqJJn3ocw
+      Expires:
+      - Sat, 05 Dec 2015 14:54:10 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Sat, 05 Dec 2015 14:54:10 GMT
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"type":"http-01","status":"pending","uri":"https://acme-staging.api.letsencrypt.org/acme/challenge/S9B6H5BxBmtMUFbwz-dE2tws_cdhtoyyUzq4egEW4z4/806464","token":"1FKNadAIpXOJG04z_upuJmxYIqGaEDB3Rm3-ukXqexE","keyAuthorization":"1FKNadAIpXOJG04z_upuJmxYIqGaEDB3Rm3-ukXqexE.3pLXne-W2Le1DExbNmBiZt8VKga4LBDmvLn5bp617n0"}'
+    http_version: 
+  recorded_at: Sat, 05 Dec 2015 14:45:00 GMT
+- request:
+    method: get
+    uri: https://acme-staging.api.letsencrypt.org/acme/challenge/S9B6H5BxBmtMUFbwz-dE2tws_cdhtoyyUzq4egEW4z4/806464
+    body:
+      encoding: UTF-8
+      string: '{"header":{"alg":"RS256","jwk":{"kty":"RSA","e":"AQAB","n":"sVV526Ht43vXCoJjKp4VN1wzDclaIfbyWt_XL8apRbORvB00cwznEvLdTd1oeeZ5_PNxHNU6GIG1eWE9Qsl2TdiZe67gfzuoXoKKPU3m8SlLyzM84c-GhUqGKhfHo0FDgwxu5efReZOUiUKOGJ-m1wBYJ1zwAx8qcwCnrtXlY_DlzO6S1_Y9-sxZXuy7CSM3OWl7S83IMOvfCY6Cp-ZLSJLVQpLZIDpDMDVKm_Gl9Rs_jhQIr7I0iSFmqbbzhVX9F0gGdM5rUgJzDCUanQaulTF-i5hJgXbmdLWu_Gtaz9rMlPQdhUJXCc5_9IZgw5KYEryL_GewMuHYeh3nUOI1yw"}},"protected":"eyJub25jZSI6InJoalhkYV84TENVRW1hczQ0cHJPSVdZUHFiS2t6M3E0RGd2cUpKbjNvY3cifQ","payload":"bnVsbA","signature":"f0ZzH4ZMRzD6_Prg6mR3faZ0FAnfs6Ybu8AZs-5TLgYU388zArpa6VrSXuo6alxUpsGFeCdySLW3LH48IbIOYhXrj5jOvgyxNILpusblqPwxCuc6HcnMvn6Sp0n9hc9QSEyTv8ZRz_wlHK55l6cBnVukXTyNAHSj_Hh_uwZA8e1UI-p7tvZgX3089pYka0-kcbbezrZuip3y2aCQFTSR5JLSaJc4kGCnZIqbqKRe38lPd8cEFusIU-UeoMnQHumwzeVP1yeZGshmN5NM8fQlVUJXgmU0aWoP7INr2LyLA1UKcSd8NGF1zjcZnb0vVEXpUkiuzzeI6Qy-jbA8YKSy7A"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '551'
+      Link:
+      - <https://acme-staging.api.letsencrypt.org/acme/authz/S9B6H5BxBmtMUFbwz-dE2tws_cdhtoyyUzq4egEW4z4>;rel="up"
+      Location:
+      - https://acme-staging.api.letsencrypt.org/acme/challenge/S9B6H5BxBmtMUFbwz-dE2tws_cdhtoyyUzq4egEW4z4/806464
+      Replay-Nonce:
+      - HLIk5Uh-q_-oC0VQiksC1cyy-d2oQObEexwYVhauu04
+      Expires:
+      - Sat, 05 Dec 2015 14:54:11 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Sat, 05 Dec 2015 14:54:11 GMT
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"type":"http-01","status":"valid","uri":"https://acme-staging.api.letsencrypt.org/acme/challenge/S9B6H5BxBmtMUFbwz-dE2tws_cdhtoyyUzq4egEW4z4/806464","token":"1FKNadAIpXOJG04z_upuJmxYIqGaEDB3Rm3-ukXqexE","keyAuthorization":"1FKNadAIpXOJG04z_upuJmxYIqGaEDB3Rm3-ukXqexE.3pLXne-W2Le1DExbNmBiZt8VKga4LBDmvLn5bp617n0","validationRecord":[{"url":"http://stefanwienert.de/.well-known/acme-challenge/1FKNadAIpXOJG04z_upuJmxYIqGaEDB3Rm3-ukXqexE","hostname":"stefanwienert.de","port":"80","addressesResolved":["148.251.82.119"],"addressUsed":"148.251.82.119"}]}'
+    http_version: 
+  recorded_at: Sat, 05 Dec 2015 14:45:00 GMT
+- request:
+    method: get
+    uri: https://acme-staging.api.letsencrypt.org/acme/challenge/S9B6H5BxBmtMUFbwz-dE2tws_cdhtoyyUzq4egEW4z4/806464
+    body:
+      encoding: UTF-8
+      string: '{"header":{"alg":"RS256","jwk":{"kty":"RSA","e":"AQAB","n":"sVV526Ht43vXCoJjKp4VN1wzDclaIfbyWt_XL8apRbORvB00cwznEvLdTd1oeeZ5_PNxHNU6GIG1eWE9Qsl2TdiZe67gfzuoXoKKPU3m8SlLyzM84c-GhUqGKhfHo0FDgwxu5efReZOUiUKOGJ-m1wBYJ1zwAx8qcwCnrtXlY_DlzO6S1_Y9-sxZXuy7CSM3OWl7S83IMOvfCY6Cp-ZLSJLVQpLZIDpDMDVKm_Gl9Rs_jhQIr7I0iSFmqbbzhVX9F0gGdM5rUgJzDCUanQaulTF-i5hJgXbmdLWu_Gtaz9rMlPQdhUJXCc5_9IZgw5KYEryL_GewMuHYeh3nUOI1yw"}},"protected":"eyJub25jZSI6IkhMSWs1VWgtcV8tb0MwVlFpa3NDMWN5eS1kMm9RT2JFZXh3WVZoYXV1MDQifQ","payload":"bnVsbA","signature":"ldQSjhJ1mkQK1uQ9Aly1jrCTS0vl_MuhYcK-a59VOqh57QtH95OdvOhaDEJMTehG33G-YF_g62q0idAuzINM0yRvBxJUXOwxLqgBS3NUF42iW9lnga0MeqUhzwdNGmFzl-iviGKeJFmaB5B0VwDXhZW8dB-OO3MqQaObYdMa1XqNPe1TSI5Kr6FRNnq8au6FBHDh6kUjm7KJYx_VIoUDGCEzLhCAus6GH59BCjhCepoV5SsCVbcnyyvwbuxxMv5zWFEvawXHD3xfNLdsyDRST-npSp-obc2Y3SMomb1zO49Cl8IvXIE5BjNO0xzLpO3BgyIzcK8xRbrE5TiC1Ic1SQ"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '551'
+      Link:
+      - <https://acme-staging.api.letsencrypt.org/acme/authz/S9B6H5BxBmtMUFbwz-dE2tws_cdhtoyyUzq4egEW4z4>;rel="up"
+      Location:
+      - https://acme-staging.api.letsencrypt.org/acme/challenge/S9B6H5BxBmtMUFbwz-dE2tws_cdhtoyyUzq4egEW4z4/806464
+      Replay-Nonce:
+      - GBf6LTmFaoy5aWOQaSaqtkI-La8PhCehTKxlMba6kR8
+      Expires:
+      - Sat, 05 Dec 2015 14:54:12 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Sat, 05 Dec 2015 14:54:12 GMT
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"type":"http-01","status":"valid","uri":"https://acme-staging.api.letsencrypt.org/acme/challenge/S9B6H5BxBmtMUFbwz-dE2tws_cdhtoyyUzq4egEW4z4/806464","token":"1FKNadAIpXOJG04z_upuJmxYIqGaEDB3Rm3-ukXqexE","keyAuthorization":"1FKNadAIpXOJG04z_upuJmxYIqGaEDB3Rm3-ukXqexE.3pLXne-W2Le1DExbNmBiZt8VKga4LBDmvLn5bp617n0","validationRecord":[{"url":"http://stefanwienert.de/.well-known/acme-challenge/1FKNadAIpXOJG04z_upuJmxYIqGaEDB3Rm3-ukXqexE","hostname":"stefanwienert.de","port":"80","addressesResolved":["148.251.82.119"],"addressUsed":"148.251.82.119"}]}'
+    http_version: 
+  recorded_at: Sat, 05 Dec 2015 14:45:00 GMT
+recorded_with: VCR 3.0.0
