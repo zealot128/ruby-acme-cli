@@ -26,7 +26,13 @@ $ letsencrypt-cli --version
 
 Unfortunately, most Linux distributions does not ship a current Ruby version (Version 1.9.3 or 2.0).
 
-If you are installing this as a non-root user, you might want to try RVM (needs no root:
+If you are installing this as a non-root user, you might want to try RVM. Installation itself needs no root, but needs some packages:
+
+```
+sudo apt-get install curl bison build-essential zlib1g-dev libssl-dev libreadline6-dev libxml2-dev libgmp-dev git-core
+```
+
+To install RVM:
 
 ```
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
