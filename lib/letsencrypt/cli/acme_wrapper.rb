@@ -5,6 +5,9 @@ require 'pry'
 class AcmeWrapper
   def initialize(options)
     @options = options
+    if !@options[:color]
+      String.disable_colorization = true
+    end
   end
 
   def log(message, severity=:info)

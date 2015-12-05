@@ -7,13 +7,14 @@ module Letsencrypt
       class_option :account_key, desc: "Path to private key file (will be created if not exists)", aliases: "-a", default: 'account_key.pem'
       class_option :production, desc: "Use production url of letsencrypt instead of staging server", aliases: "-p", type: :boolean
       class_option :log_level, desc: "Log Level (debug, info, warn, error, fatal)", default: "info"
+      class_option :color, desc: "Disable colorize", default: true, type: :boolean
 
       desc 'register EMAIL', 'Register account'
       method_option :key_length, desc: "Length of generated private key", type: :numeric, default: 4096
       def register(email)
         registration = wrapper.client.register(contact: email)
         registration.agree_terms
-        log "Account created, Terms accepted"
+        wrapper.log "Account created, Terms accepted"
       end
 
       desc 'authorize_all', "Verify all server_names in /etc/nginx/sites-enabled/* (needs read access)"
