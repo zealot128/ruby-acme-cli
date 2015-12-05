@@ -89,6 +89,22 @@ class AcmeWrapper
     log "Certificate valid until: #{certificate.x509.not_after}"
   end
 
+  def check_certificate(path)
+    unless File.exists?(path)
+      log "Certificate #{path} does not exists", :warn
+      return false
+    end
+    cert = OpenSSL::X509::Certificate.new(File.read(path))
+    renew_on = cert.not_after.to_date - @options[:days_valid]
+    log "Certificate '#{path}' valid until #{cert.not_after.to_date}.", :info
+    if Date.today >= renew_on
+      log "Certificate '#{path}' should be renewed!", :warn
+      return false
+    else
+      true
+    end
+  end
+
   private
 
   def certificate_exists_and_valid?

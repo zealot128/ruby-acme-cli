@@ -62,8 +62,15 @@ module Letsencrypt
         wrapper.cert(domains)
       end
 
-			map %w[--version -v] => :__print_version
+      desc "check PATH_TO_CERTIFICATE", "checks, if a given certificate exists and is valid until DAYS_VALID"
+      method_option :days_valid, desc: "If the --certificate-path already exists, only create new stuff, if that certificate isn't valid for less than the given number of days", default: 30, type: :numeric
+      def check(path)
+        if !wrapper.check_certificate(path)
+          exit 1
+        end
+      end
 
+			map %w[--version -v] => :__print_version
 			desc "--version, -v", "print the version"
 			def __print_version
 				puts Letsencrypt::Cli::VERSION

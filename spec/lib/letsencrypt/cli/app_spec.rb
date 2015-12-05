@@ -11,9 +11,9 @@ module Letsencrypt::Cli
           key_path = File.join(@current_dir, "account_key.pem")
           out = capture(:stdout) {
             app.invoke "register", ["info@stefanwienert.de"],
-              color: false,
-              test: true,
-              account_key: key_path
+            color: false,
+            test: true,
+            account_key: key_path
           }
           expect(out).to include "Account created"
           expect(File.exists?(key_path)).to be == true
@@ -26,7 +26,7 @@ module Letsencrypt::Cli
     # VCR will record that transaction for further replay
     describe "authorization & certificate creation" do
       let(:account_key) {
-          <<-DOC.strip_heredoc
+        <<-DOC.strip_heredoc
           -----BEGIN RSA PRIVATE KEY-----
           MIIEogIBAAKCAQEAsVV526Ht43vXCoJjKp4VN1wzDclaIfbyWt/XL8apRbORvB00
           cwznEvLdTd1oeeZ5/PNxHNU6GIG1eWE9Qsl2TdiZe67gfzuoXoKKPU3m8SlLyzM8
@@ -54,7 +54,7 @@ module Letsencrypt::Cli
           rfslBuyXgqLKB9/rbfA9Vy02hQwc+0xRkQtpaDGIOugSST7ZrLfX8MhFPS/wFDqV
           KCaxWx68GyDxcw8j7w5J2etgl+RSH3uuBDwFszz1yVkwfECVMUk=
           -----END RSA PRIVATE KEY-----
-          DOC
+        DOC
       }
       let(:key_path) { File.join(@current_dir, "account_key.pem") }
 
@@ -85,40 +85,40 @@ module Letsencrypt::Cli
           private_key_path = File.join(@current_dir, "key.pem")
           # We need to fixate private key to verify the generated certificates match
           File.write private_key_path, <<-DOC.strip_heredoc
-						-----BEGIN RSA PRIVATE KEY-----
-						MIIEpAIBAAKCAQEAzPB6oj/SvD5OvlfNEjI72+Dk3Z96zTR8nEwucDa4nPCdmUq5
-						s8/his/EV2hvQ51NYEFDl66gwp/XedVwy20ZJwUtOTxTxoQ+D3kO5h4aQywXnyv1
-						h/vi4pFEF1G5OAQaRvoax3B4T5Ta9rJnriTWXDZgvSbJV0MPgazuuQF7risPNJYH
-						jHyRCbFO6JOTIB8IgeaLZbWoVW907e6cpAS1wa0Q6C1xxZDHXRBQN31e+dNJkyyJ
-						u+Rh56AXm7/+q+RySa2E1So4VaYO0QWK0Ux1x8vN+nS8wyOP4VndXH6++fvSRx4V
-						mzLv6Iq87aSS8rg3YYGpFQwyD4EXWSRVlz86qQIDAQABAoIBABKmX8KcJEVVNj1E
-						KDlbsO7VjH5OoRJDkIN4u1Ei6bH+g5kLn9KpPFExjyCVNGrmyb/UsJ4BGkgb27QO
-						pHEewIc4hWEMCGOsbSljTuPKIYGzZYLqsTFqzr7nkVa97SkX1nxXDlDP/2LenP6O
-						RbknSQqjODJ+cRwr0iFu51qWs/apcrEOJgT/jenFaUKOqu9JbfMJ+PIEqqPLm5Ia
-						WgieJcqJ41Qgvcwun37FxygdYFpcrev8er/9kvYtGvsR0caX1Pji4ycdZP9F8Apm
-						yhMlXd1gIJadeYv6Mtoa7g1hvQcAtltTgzXH7ctBguf3zGSDHqauvp4c/ZBAnUfJ
-						TkaJNAECgYEA9g5ZGsT23Y+6a4Fg3eYJ3KEDUog6uWrPPQvAy/X8SsdFbisFJ1/X
-						0lsCo9DS9CskbySRUVw3Nx6FOMOBAOlWmgFDuOxzKgtM3lMRQ0HykvQblkhTH/Nq
-						yqiV9awPsmG228S+3SESRcN2UfzcUmMZYiMPXsOftNs5WSnoYikfjMkCgYEA1Ti+
-						xHednRlT/VSobYufgYj7bptOx2gKLrXMdQm2ElplqrjcqU5aiaM427VHq+RFwzly
-						7PqIeA9TexTSGWKtoJ9MQ1L4z5eoXwHeHDWT4E4xw67HzuJymL09HcKkg+RtmMLZ
-						iBbAiFsFuw86akUf/CRJ4r9/j7GyePk12l6FjuECgYEAjvdRQKOXCK9dUt+up9/k
-						dQQ9CPRMorVzynWMxTWdLNnR9qwaZ4FhxkDJLOPF3sc+eTGXGd3p2yXppEy8JQpv
-						HjaD4evJEnHUbQ1450pnJomdidlmKxdlQnFoCIG78Rqjg9gySgvQMSbcFdFFNr2L
-						3yCd6qLhpdUG4k7eTkK0qTkCgYEApEEAhGz5GCqIzyDGVw02JR2XQ4+U0nxNS8p0
-						5LxEbEMDCs85/ZsEl/8LMAWoXryNGWVKKVCejI6R6sERUMj5pEDTCRID5jeYVwgj
-						SGvlrOfP4kTkW3WKfitZx3FINupjm0iPNwz/6IrmEUIb5/20NBLocCrBY7qqGBMy
-						7zPdg0ECgYBFxm3QfgG21SXMcI7Y9I+p6/LnDgtlk7vwrMAtH7HsKA1WE0MVlPtM
-						tyM4bLlbNGUdAaS8c20aayT89JZQD8xYWrR2toxf1aWP+a1LCB7sf6CWEzJAFBRz
-						tI3N7MDYHnZFmkayHI3/UrGBTlGSpl21LQJ578Ig66TiOSsEVcUPZQ==
-						-----END RSA PRIVATE KEY-----
+            -----BEGIN RSA PRIVATE KEY-----
+            MIIEpAIBAAKCAQEAzPB6oj/SvD5OvlfNEjI72+Dk3Z96zTR8nEwucDa4nPCdmUq5
+            s8/his/EV2hvQ51NYEFDl66gwp/XedVwy20ZJwUtOTxTxoQ+D3kO5h4aQywXnyv1
+            h/vi4pFEF1G5OAQaRvoax3B4T5Ta9rJnriTWXDZgvSbJV0MPgazuuQF7risPNJYH
+            jHyRCbFO6JOTIB8IgeaLZbWoVW907e6cpAS1wa0Q6C1xxZDHXRBQN31e+dNJkyyJ
+            u+Rh56AXm7/+q+RySa2E1So4VaYO0QWK0Ux1x8vN+nS8wyOP4VndXH6++fvSRx4V
+            mzLv6Iq87aSS8rg3YYGpFQwyD4EXWSRVlz86qQIDAQABAoIBABKmX8KcJEVVNj1E
+            KDlbsO7VjH5OoRJDkIN4u1Ei6bH+g5kLn9KpPFExjyCVNGrmyb/UsJ4BGkgb27QO
+            pHEewIc4hWEMCGOsbSljTuPKIYGzZYLqsTFqzr7nkVa97SkX1nxXDlDP/2LenP6O
+            RbknSQqjODJ+cRwr0iFu51qWs/apcrEOJgT/jenFaUKOqu9JbfMJ+PIEqqPLm5Ia
+            WgieJcqJ41Qgvcwun37FxygdYFpcrev8er/9kvYtGvsR0caX1Pji4ycdZP9F8Apm
+            yhMlXd1gIJadeYv6Mtoa7g1hvQcAtltTgzXH7ctBguf3zGSDHqauvp4c/ZBAnUfJ
+            TkaJNAECgYEA9g5ZGsT23Y+6a4Fg3eYJ3KEDUog6uWrPPQvAy/X8SsdFbisFJ1/X
+            0lsCo9DS9CskbySRUVw3Nx6FOMOBAOlWmgFDuOxzKgtM3lMRQ0HykvQblkhTH/Nq
+            yqiV9awPsmG228S+3SESRcN2UfzcUmMZYiMPXsOftNs5WSnoYikfjMkCgYEA1Ti+
+            xHednRlT/VSobYufgYj7bptOx2gKLrXMdQm2ElplqrjcqU5aiaM427VHq+RFwzly
+            7PqIeA9TexTSGWKtoJ9MQ1L4z5eoXwHeHDWT4E4xw67HzuJymL09HcKkg+RtmMLZ
+            iBbAiFsFuw86akUf/CRJ4r9/j7GyePk12l6FjuECgYEAjvdRQKOXCK9dUt+up9/k
+            dQQ9CPRMorVzynWMxTWdLNnR9qwaZ4FhxkDJLOPF3sc+eTGXGd3p2yXppEy8JQpv
+            HjaD4evJEnHUbQ1450pnJomdidlmKxdlQnFoCIG78Rqjg9gySgvQMSbcFdFFNr2L
+            3yCd6qLhpdUG4k7eTkK0qTkCgYEApEEAhGz5GCqIzyDGVw02JR2XQ4+U0nxNS8p0
+            5LxEbEMDCs85/ZsEl/8LMAWoXryNGWVKKVCejI6R6sERUMj5pEDTCRID5jeYVwgj
+            SGvlrOfP4kTkW3WKfitZx3FINupjm0iPNwz/6IrmEUIb5/20NBLocCrBY7qqGBMy
+            7zPdg0ECgYBFxm3QfgG21SXMcI7Y9I+p6/LnDgtlk7vwrMAtH7HsKA1WE0MVlPtM
+            tyM4bLlbNGUdAaS8c20aayT89JZQD8xYWrR2toxf1aWP+a1LCB7sf6CWEzJAFBRz
+            tI3N7MDYHnZFmkayHI3/UrGBTlGSpl21LQJ578Ig66TiOSsEVcUPZQ==
+            -----END RSA PRIVATE KEY-----
           DOC
           VCR.use_cassette "certificate/stw" do
             cert_path = File.join(@current_dir, "cert.pem")
             fullchain_path = File.join(@current_dir, "fullchain.pem")
             chain_path = File.join(@current_dir, "chain.pem")
             stdout = capture(:stdout) {
-            app.invoke "cert", ["stefanwienert.de"],
+              app.invoke "cert", ["stefanwienert.de"],
               color: false,
               test: true,
               certificate_path: cert_path,
@@ -140,9 +140,9 @@ module Letsencrypt::Cli
       end
     end
 
-    specify "cert still valid" do
-      Timecop.freeze Time.parse("2015-12-05 12:00") do
-        cert = <<-DOC.strip_heredoc
+    describe 'cert validation' do
+      let(:cert) {
+          <<-DOC.strip_heredoc
           -----BEGIN CERTIFICATE-----
           MIIE+DCCA+CgAwIBAgITAPpwmurwFGWv2JshsvTKRSP8eTANBgkqhkiG9w0BAQsF
           ADAfMR0wGwYDVQQDDBRoYXBweSBoYWNrZXIgZmFrZSBDQTAeFw0xNTEyMDQyMjAx
@@ -172,15 +172,52 @@ module Letsencrypt::Cli
           JYGOaudcRmmXiuLPHUQcqhNikRNHzZhsSXAIRJntVG4ifk5bbVPPngHVDlXnZM9T
           0yA+Ssmk6klj0Q1MZMVhivMGvZxQxFsXzHXsTg==
           -----END CERTIFICATE-----
-        DOC
-        cert_path = File.join(@current_dir, "cert.pem")
-        File.write(cert_path, cert)
-        out = capture(:stdout) do
-          expect {
-            app.invoke("cert", ['example.com'], certificate_path: cert_path, color: false, test: true)
-          }.to raise_error(SystemExit)
+          DOC
+      }
+      describe 'check CERT' do
+        let(:cert_path) { File.join(@current_dir, "cert.pem") }
+        specify 'check CERT with valid cert exits 0 and displays information' do
+          Timecop.freeze Time.parse("2015-12-05 12:00") do
+            File.write(cert_path, cert)
+            out = capture(:stdout) do
+              app.invoke("check", [cert_path], color: false)
+            end
+            expect(out).to include '2016-03-03'
+          end
         end
-        expect(out).to include 'still valid till 2016-03-03'
+        specify 'check CERT with valid cert exits 1 if behind schedule' do
+          Timecop.freeze Time.parse("2016-03-04 12:00") do
+            File.write(cert_path, cert)
+            out = capture(:stdout) do
+              expect {
+                app.invoke("check", [cert_path], color: false)
+              }.to raise_error(SystemExit)
+            end
+            expect(out).to include '2016-03-03'
+            expect(out).to include "should be renewed"
+          end
+        end
+        specify 'check CERT exits 1 if cert not exists' do
+          out = capture(:stdout) do
+            expect {
+              app.invoke("check", [cert_path], color: false)
+            }.to raise_error(SystemExit)
+          end
+          expect(out).to include "does not exists"
+        end
+      end
+
+      specify "cert still valid" do
+        Timecop.freeze Time.parse("2015-12-05 12:00") do
+          cert_path = File.join(@current_dir, "cert.pem")
+          File.write(cert_path, cert)
+          out = capture(:stdout) do
+            expect {
+              app.invoke("cert", ['example.com'], certificate_path: cert_path, color: false, test: true)
+            }.to raise_error(SystemExit)
+          end
+          expect(out).to include 'still valid till 2016-03-03'
+        end
       end
     end
   end
