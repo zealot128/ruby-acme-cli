@@ -70,11 +70,32 @@ module Letsencrypt
         end
       end
 
-			map %w[--version -v] => :__print_version
-			desc "--version, -v", "print the version"
-			def __print_version
-				puts Letsencrypt::Cli::VERSION
-			end
+      desc "manage DOMAINS", "meta command that will: check if cert already exists / still valid (exits zero if nothing todo) + authorize given domains + issue certificate for given domains"
+      method_option :key_length, desc: "Length of private key", default: 2048, type: :numeric
+      method_option :days_valid, desc: "If the --certificate-path already exists, only create new stuff, if that certificate isn't valid for less than the given number of days", default: 30, type: :numeric
+      method_option :webroot_path, desc: "Path to mapped .well-known/acme-challenge folder (no subdirs will be created)", aliases: '-w', required: true
+      method_option :key_directory, desc: "Base directory of key creation. A subfolder with the first domain will be created where all certs + key are stored", default: "~/certs/"
+      def manage(*domains)
+        key_dir = File.join(@options[:key_directory], domains.first)
+        FileUtils.mkdir_p(key_dir)
+        @options = @options.merge(
+          :private_key_path  => File.join(key_dir, 'key.pem'),
+          :fullchain_path    => File.join(key_dir, 'fullchain.pem'),
+          :certificate_path  => File.join(key_dir, 'cert.pem'),
+          :chain_path        => File.join(key_dir, 'chain.pem'),
+        )
+        if wrapper.check_certificate(@options[:certificate_path])
+          exit 1
+        end
+        authorize(*domains)
+        cert(*domains)
+      end
+
+      map %w[--version -v] => :__print_version
+      desc "--version, -v", "print the version"
+      def __print_version
+        puts Letsencrypt::Cli::VERSION
+      end
 
       private
 

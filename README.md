@@ -1,4 +1,4 @@
-# Letsencrypt::Cli
+# Letsencrypt-Cli
 
 [![Build Status](https://travis-ci.org/zealot128/ruby-letsencrypt-cli.svg?branch=travis)](https://travis-ci.org/zealot128/ruby-letsencrypt-cli)
 [![Gem Version](https://badge.fury.io/rb/letsencrypt-cli.svg)](https://badge.fury.io/rb/letsencrypt-cli)
@@ -7,11 +7,44 @@ Yet another Letsencrypt client using Ruby.
 
 ## Installation
 
-* This tool needs Ruby > 2.0 (as the dependency acme needs that).
-* openssl bindings
-* no sudo! (Just access to webserver root .well-known alias)
+* This tool needs Ruby >= 2.1 (as the dependency ``acme-client`` needs that because of use of keyword arguments).
+* OpenSSL bindings
+* no sudo! (needs access to webserver-root ``/.well-known/acme-challenges`` alias for all domains - See later section for Nginx example)
 
-    $ gem install letsencrypt-cli
+```
+# check your ruby version:
+$ ruby --version
+ruby 2.2.3p173 (2015-08-18 revision 51636) [x86_64-linux]
+
+$ gem install letsencrypt-cli
+
+$ letsencrypt-cli --version
+0.1.2
+```
+
+### Troubleshooting Ruby version
+
+Unfortunately, most Linux distributions does not ship a current Ruby version (Version 1.9.3 or 2.0).
+
+If you are installing this as a non-root user, you might want to try RVM (needs no root:
+
+```
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+\curl -sSL https://get.rvm.io | bash -s stable  --autolibs=disable --auto-dotfiles
+
+rvm install 2.2
+source ~/.bashrc # or ~/.profile RVM tells you to reload your shell
+
+ruby --version
+```
+
+Notice: If you are using RVM, all your cronjobs must be run as a login shell, otherwise RVM does not work:
+
+```cron
+* * * * * /bin/bash -l -c "letsencrypt-cli manage ..."
+```
+
+Another way, e.g. on Ubuntu 14.04 might be to use the [Brightbox ppa](https://www.brightbox.com/blog/2015/01/05/ruby-2-2-0-packages-for-ubuntu/).
 
 ## Usage
 
@@ -52,7 +85,45 @@ letsencrypt-cli check --days-valid 30 cert.pem
 ```
 
 
-## Example integration nginx:
+And last but not least, the meta command ``manage`` that integrated check + authorize + cert (intended to be run as cronjob):
+
+```bash
+$ letsencrypt-cli manage --days-valid 30 \
+                       --account-key /home/letsencrypt/account_key.pem \
+                       --webroot-path /home/letsencrypt/webroot/.well-known/acme-challenge \
+                       --key-directory /home/letsencrypt/certs \
+                       example.com www.example.com
+
+2015-12-05 23:40:04 +0100: Certificate /home/letsencrypt/certs/example.com/cert.pem does not exists
+2015-12-05 23:40:04 +0100: Authorizing example.com...
+2015-12-05 23:40:04 +0100: existing account key found
+2015-12-05 23:40:06 +0100: Authorization successful for example.com
+2015-12-05 23:40:06 +0100: Authorizing www.example.com
+2015-12-05 23:40:08 +0100: Authorization successful for www.example.com
+2015-12-05 23:40:08 +0100: creating new private key to /home/letsencrypt/certs/example.com/key.pem...
+2015-12-05 23:40:09 +0100: Certificate successfully created to /home/letsencrypt/certs/example.com/fullchain.pem /home/letsencrypt/certs/example.com/chain.pem
+and /home/letsencrypt/certs/example.com/cert.pem!
+2015-12-05 23:40:09 +0100: Certificate valid until: 2016-03-04 21:40:00 UTC
+
+# Run command again exits immediately:
+$ letsencrypt-cli manage --days-valid 30 --account-key /home/letsencrypt/account_key.pem --webroot-path /home/letsencrypt/webroot/.wel
+l-known/acme-challenge --key-directory /home/letsencrypt/certs \
+      example.com www.example.com
+2015-12-05 23:40:17 +0100: Certificate '/home/letsencrypt/certs/example.com/cert.pem' valid until 2016-03-04.
+$ echo $?
+1
+```
+
+This had:
+
+1. check if /home/letsencrypt/certs/example.com/cert.pem exists and expires in less than 30 days (or exit 1 at this point)
+2. authorize all domains + subdomains
+3. issue one certificate with those domains and place it under /home/letsencrypt/certs/example.com/[key.pem,fullchain.pem,chain.pem,cert.pem]
+4. exit 0 -> so can be && with ``service nginx reload`` or mail deliver
+
+For running as cron, reducing log level to fatal might be desirable: ``letsencrypt-cli manage --log-level fatal``.
+
+## Example integration Nginx:
 
 ```nginx
 server {
@@ -72,10 +143,10 @@ Afterwards, use the fullchain.pem and key.pem:
 ```nginx
 server {
   listen 443 ssl;
-  server_name stefanwienert.de www.stefanwienert.de;
+  server_name example.com www.example.com;
   ssl on;
-  ssl_certificate_key /path/to/key.pem;
-  ssl_certificate /path/to/fullchain.pem;
+  ssl_certificate_key /home/letsencrypt/certs/example.com/key.pem;
+  ssl_certificate /home/letsencrypt/certs/example.com/fullchain.pem;
 
   # use the settings from: https://gist.github.com/konklone/6532544
 ```
@@ -88,7 +159,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/zealot128/letsencrypt-cli/fork )
+1. Fork it ( https://github.com/zealot128/ruby-letsencrypt-cli/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
