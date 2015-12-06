@@ -2,24 +2,99 @@ require "spec_helper"
 require "letsencrypt-cli"
 require "tmpdir"
 
+
+# Silence warnings when rspec mocks modifies methods
+class Letsencrypt::Cli::App
+  class << self
+    def create_command(meth)
+      if meth.starts_with?("__")
+        return
+      else
+        super
+      end
+    end
+  end
+end
+
 module Letsencrypt::Cli
-  describe "App" do
+  RSpec.describe "App" do
     let(:app) { App.new }
-    specify "register" do
-      Timecop.freeze Time.parse("2015-12-05 12:00") do
-        VCR.use_cassette("register") do
-          key_path = File.join(@current_dir, "account_key.pem")
-          out = capture(:stdout) {
-            app.invoke "register", ["info@stefanwienert.de"],
+    describe "register" do
+      let(:key_path) { File.join(@current_dir, "account_key.pem") }
+      specify "register EMAIL" do
+        Timecop.freeze Time.parse("2015-12-05 12:00") do
+          VCR.use_cassette("register") do
+            out = capture(:stdout) {
+              app.invoke "register", ["info@stefanwienert.de"],
+              color: false,
+              test: true,
+              account_key: key_path
+            }
+            expect(out).to include "Account created"
+            expect(File.exists?(key_path)).to be == true
+          end
+        end
+      end
+      specify "register - checks input" do
+        expect {
+          capture(:stdout) {
+            app.invoke "register", [""],
             color: false,
             test: true,
             account_key: key_path
           }
-          expect(out).to include "Account created"
-          expect(File.exists?(key_path)).to be == true
-        end
+        }.to raise_error(SystemExit)
+      end
+      specify "register - checks if email" do
+        expect {
+          capture(:stdout) {
+            app.invoke "register", ['foobarnomail'],
+            color: false,
+            test: true,
+            account_key: key_path
+          }
+        }.to raise_error(SystemExit)
       end
     end
+
+    describe "Authorize_all" do
+      specify "uses nginx configs" do
+        File.write(@current_dir + "/example_site", <<-DOC.strip_heredoc)
+        server {
+          listen 80;
+          server_name example.com www.example.com subdir.example.com;
+        }
+
+        server {
+          listen 80;
+          server_name foo.example.com;
+        }
+
+        server {
+          listen 443;
+          server_name foo.example.com;
+        }
+        DOC
+
+        expect_any_instance_of(Letsencrypt::Cli::App).to receive(:authorize).with("example.com", "www.example.com", "subdir.example.com", "foo.example.com")
+
+        app.invoke "authorize_all", [],
+          color: false,
+          test: true,
+          webserver_dir: @current_dir,
+          webroot_path: @current_dir
+
+      end
+    end
+
+    specify 'version' do
+      out = capture(:stdout) {
+      app.invoke "__print_version", [], {}
+      }
+      expect(out).to include Letsencrypt::Cli::VERSION
+    end
+
+
 
     # this test needs manual intervention -> I will binding.pry inside the
     # authorization and copy the verification to a live server that i provide
@@ -138,6 +213,18 @@ module Letsencrypt::Cli
           end
         end
       end
+
+      specify "exits if no domains given" do
+        expect {
+          capture(:stdout) {
+            app.invoke "cert", [],
+            color: false,
+            test: true,
+            account_key: @current_dir,
+            webroot_path: @current_dir
+          }
+        }.to raise_error(SystemExit)
+      end
     end
 
     describe 'cert validation' do
@@ -219,6 +306,18 @@ module Letsencrypt::Cli
           expect(out).to include 'still valid till 2016-03-03'
         end
       end
+    end
+    describe 'manage DOMAINS' do
+      specify 'manage calls out to the other functions and creates the given work dir' do
+        expect_any_instance_of(Letsencrypt::Cli::App).to receive(:authorize).with("example.com")
+        expect_any_instance_of(Letsencrypt::Cli::App).to receive(:cert).with("example.com")
+        app.invoke("manage", ['example.com'], color: false,
+                    key_directory: @current_dir,
+                    log_level: 'fatal',
+                    webroot_path: @current_dir
+                  )
+      end
+
     end
   end
 

@@ -13,11 +13,11 @@ module Letsencrypt
       method_option :key_length, desc: "Length of generated private key", type: :numeric, default: 4096
       def register(email)
         if email.nil? || email == ""
-          log "no E-Mail specified!", :fatal
+          wrapper.log "no E-Mail specified!", :fatal
           exit 1
         end
         if !email[/.*@.*/]
-          log "not an email", :fatal
+          wrapper.log "not an email", :fatal
           exit 1
         end
         registration = wrapper.client.register(contact: "mailto:" + email)
@@ -27,8 +27,9 @@ module Letsencrypt
 
       desc 'authorize_all', "Verify all server_names in /etc/nginx/sites-enabled/* (needs read access)"
       method_option :webroot_path, desc: "Path to mapped .acme-challenge folder (no subdir)", aliases: '-w', required: true
+      method_option :webserver_dir, desc: "Path to webserver configs", default: "/etc/nginx/sites-enabled"
       def authorize_all
-        lines = Dir['/etc/nginx/sites-enabled/*'].map{|file| File.read(file).lines.grep(/^\s*server_name/) }.flatten
+        lines = Dir[ File.join(@options[:webserver_dir], "*")].map{|file| File.read(file).lines.grep(/^\s*server_name/) }.flatten
         domains = lines.flatten.map{|i| i.strip.split(/[; ]/).drop(1) }.flatten.reject{|i| i.length < 3 }.uniq
         authorize(*domains)
       end
@@ -56,7 +57,7 @@ module Letsencrypt
       method_option :days_valid, desc: "If the --certificate-path already exists, only create new stuff, if that certificate isn't valid for less than the given number of days", default: 30, type: :numeric
       def cert(*domains)
         if domains.length == 0
-          $stderr.puts "no domains given"
+          wrapper.log "no domains given", :fatal
           exit 1
         end
         wrapper.cert(domains)
