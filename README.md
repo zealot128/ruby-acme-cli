@@ -54,7 +54,7 @@ Another way, e.g. on Ubuntu 14.04 might be to use the [Brightbox ppa](https://ww
 
 ## Usage
 
-Specify ``-t`` to use Letsencrypt test server. Without it, all requests are called against the production server, that might have same more strict rate limiting. If you are just toying around, add the -t flag.
+Specify ``-t`` to use Letsencrypt test server. Without it, all requests are called against the production server, that might have some more strict rate limiting. If you are just toying around, add the -t flag.
 
 ```bash
 # show all commands
