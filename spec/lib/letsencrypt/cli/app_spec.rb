@@ -188,6 +188,7 @@ module Letsencrypt::Cli
             tI3N7MDYHnZFmkayHI3/UrGBTlGSpl21LQJ578Ig66TiOSsEVcUPZQ==
             -----END RSA PRIVATE KEY-----
           DOC
+          File.chmod(0400, private_key_path)
           VCR.use_cassette "certificate/stw" do
             cert_path = File.join(@current_dir, "cert.pem")
             fullchain_path = File.join(@current_dir, "fullchain.pem")
@@ -205,6 +206,7 @@ module Letsencrypt::Cli
             [ cert_path, private_key_path, fullchain_path, chain_path].each {|path|
               expect(File.exists?(path)).to be == true
             }
+            expect(sprintf("%o",File.stat(private_key_path).mode)).to eq("100400")
             expect(stdout).to include "Certificate valid until"
 
             cert = OpenSSL::X509::Certificate.new File.read fullchain_path
