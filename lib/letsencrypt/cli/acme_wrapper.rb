@@ -139,6 +139,7 @@ class AcmeWrapper
       log "creating new private key to #{file_path}..."
       private_key = OpenSSL::PKey::RSA.new(length)
       File.write(file_path, private_key.to_s)
+      File.chmod(0400, file_path)
       private_key
     end
   end
