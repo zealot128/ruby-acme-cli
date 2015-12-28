@@ -19,7 +19,7 @@ ruby 2.2.3p173 (2015-08-18 revision 51636) [x86_64-linux]
 $ gem install letsencrypt-cli
 
 $ letsencrypt-cli --version
-0.1.2
+0.2.0
 ```
 
 ### Troubleshooting Ruby version
