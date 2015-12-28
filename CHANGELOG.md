@@ -1,5 +1,11 @@
 # Change Log
 
+## [unreleased](https://github.com/zealot128/ruby-letsencrypt-cli/tree)
+
+* Added Ruby 2.3.0 and Ruby head to the build matrix
+
+[Full Changelog](https://github.com/zealot128/ruby-letsencrypt-cli/compare/v0.2.0...master)
+
 ## [v0.2.0](https://github.com/zealot128/ruby-letsencrypt-cli/tree/v0.2.0)
 
 [Full Changelog](https://github.com/zealot128/ruby-letsencrypt-cli/compare/v0.1.4...v0.2.0)
