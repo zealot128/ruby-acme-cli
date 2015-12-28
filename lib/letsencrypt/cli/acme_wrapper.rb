@@ -114,7 +114,7 @@ class AcmeWrapper
       if renew_on > Date.today
         log "Certificate '#{@options[:certificate_path]}' still valid till #{cert.not_after.to_date}.", :warn
         log "Won't renew until #{renew_on} (#{@options[:days_valid]} days before)", :warn
-        exit 1
+        exit 2
       end
     end
   end

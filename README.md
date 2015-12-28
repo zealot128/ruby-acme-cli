@@ -82,8 +82,10 @@ letsencrypt-cli help cert
 letsencrypt-cli cert -t example.com www.example.com somdir.example.com
 # will create key.pem fullchain.pem chain.pem and cert.pem in current directory
 
-# checks validation date of given certificate. Exists non-zero if not exists or
-# will expire in 30 days
+# checks validation date of given certificate.
+# Exists non-zero if:
+# * not exists (exit 1)
+# * will expire in more than 30 days (exit code 2)
 letsencrypt-cli check --days-valid 30 cert.pem
 ```
 

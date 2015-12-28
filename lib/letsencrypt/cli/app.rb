@@ -71,7 +71,7 @@ module Letsencrypt
         end
       end
 
-      desc "manage DOMAINS", "meta command that will: check if cert already exists / still valid (exits zero if nothing todo) + authorize given domains + issue certificate for given domains"
+      desc "manage DOMAINS", "meta command that will: check if cert already exists / still valid (exits zero if nothing todo, exits 2 if certificate is still valid) + authorize given domains + issue certificate for given domains"
       method_option :key_length, desc: "Length of private key", default: 2048, type: :numeric
       method_option :days_valid, desc: "If the --certificate-path already exists, only create new stuff, if that certificate isn't valid for less than the given number of days", default: 30, type: :numeric
       method_option :webroot_path, desc: "Path to mapped .well-known/acme-challenge folder (no subdirs will be created)", aliases: '-w', required: true
@@ -86,7 +86,7 @@ module Letsencrypt
           :chain_path        => File.join(key_dir, 'chain.pem'),
         )
         if wrapper.check_certificate(@options[:certificate_path])
-          exit 1
+          exit 2
         end
         authorize(*domains)
         cert(*domains)
