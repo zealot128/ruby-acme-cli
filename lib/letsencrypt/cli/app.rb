@@ -71,6 +71,11 @@ module Letsencrypt
         end
       end
 
+      desc "revoke PATH_TO_CERTIFICATE", "revokes a given certificate"
+      def revoke(path)
+        wrapper.revoke_certificate(path)
+      end
+
       desc "manage DOMAINS", "meta command that will: check if cert already exists / still valid (exits zero if nothing todo, exits 2 if certificate is still valid) + authorize given domains + issue certificate for given domains"
       method_option :key_length, desc: "Length of private key", default: 2048, type: :numeric
       method_option :days_valid, desc: "If the --certificate-path already exists, only create new stuff, if that certificate isn't valid for less than the given number of days", default: 30, type: :numeric
