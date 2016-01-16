@@ -114,6 +114,9 @@ class AcmeWrapper
     if client.revoke_certificate(cert)
       log "Certificate '#{path}' was revoked", :info
     end
+  rescue Acme::Client::Error::Malformed => e
+    log e.message, :error
+    exit 2
   end
 
   private

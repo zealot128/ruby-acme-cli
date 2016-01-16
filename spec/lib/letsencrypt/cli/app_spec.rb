@@ -19,6 +19,70 @@ end
 module Letsencrypt::Cli
   RSpec.describe "App" do
     let(:app) { App.new }
+
+    let(:account_key) {
+        <<-DOC.strip_heredoc
+          -----BEGIN RSA PRIVATE KEY-----
+          MIIEogIBAAKCAQEAsVV526Ht43vXCoJjKp4VN1wzDclaIfbyWt/XL8apRbORvB00
+          cwznEvLdTd1oeeZ5/PNxHNU6GIG1eWE9Qsl2TdiZe67gfzuoXoKKPU3m8SlLyzM8
+          4c+GhUqGKhfHo0FDgwxu5efReZOUiUKOGJ+m1wBYJ1zwAx8qcwCnrtXlY/DlzO6S
+          1/Y9+sxZXuy7CSM3OWl7S83IMOvfCY6Cp+ZLSJLVQpLZIDpDMDVKm/Gl9Rs/jhQI
+          r7I0iSFmqbbzhVX9F0gGdM5rUgJzDCUanQaulTF+i5hJgXbmdLWu/Gtaz9rMlPQd
+          hUJXCc5/9IZgw5KYEryL/GewMuHYeh3nUOI1ywIDAQABAoIBAH2CMazw/p1ymNAn
+          WGhhWkLETp4DVHeVgBIxOuvlfwiF/y9UvDpxd1pB6b+iZL9iEBSnd/cgMu4FX5t4
+          5xLN451VH8waCWoDnzbEzXJ2IG2u/KXkrcJkTqEoDazdB77UAiROOG8fk3KosQg0
+          wr1KwZqJ89poPLb45+JdJFDpsmD4gPtURwBV7osJRcXZrbQ/+7UmyEoNGVB76PCP
+          /yOxG3LgjC/CKzFqES2q3rfyV+v0o2W1LYgCE0OONIWfpXrRYz/AZoavszef28Fl
+          +LgCyP8iLVAnsT2rg/Onw2oVZ9lkpdEo8v1Ym/EZhHx4Hyl/mrwmnx/9MW7e3yGy
+          HxsjiYECgYEA2lZp6005C737plID/2xVpYKRC/sYZJm8ehV8KzTWm+ZxmDPwtLz3
+          noePKnc8Glf+MX3N+5IBC2S6tj5+/LcT2zcCvDVks3iKiPAKHBN9cpx/ksS2ixTR
+          Sp+mMcFbyxDXu5LQT/C7+qI25yjpPTh4aBL+JWt2UgC7NLWEhoItk80CgYEAz+xg
+          ygtUeJzC1LMxY6u9UjGT1b75MJAXf+gDPixqNCyMzP6otGVDKKJQC/53d31A/8oF
+          1azWt4yYLzSfTzsaI+aby6pn5bp0t4DaeY8fyny9VQZvSolz4iDwdGPPQ4tfQzj8
+          IW+5tDdCLH+waeogbxK43QlpuLtJ+SgzpRVWB/cCgYAtRnoUVyEbNDw40w0NLFPe
+          TGLzjxAR3GdfEZF8DCrsjS7FFxA1CnJ2pzmi3rLR66lEbggGwNICoNKu8+q1UOmH
+          LbMdgBzvsnFX0B7oj4oV+CnkL3KDCMAVr2FxM91rEIUL2nfj+9GfOYAVE0C6dzlQ
+          q4+UBuK0Qn6PgYyHr/rviQKBgHqSFDTHHRLFBq2wvQrOsRqFE2tL20ZfixrhwRej
+          wy/im1Y1QWqmz0Ji/OE1L2QHOIwRogLmkuU9QnGBifCBHNXRGkKjv//TPP74PNKw
+          JsONaWd4FZ9RDDlfxaA3PnXI8W2FaEylukmc0au90ld9p4US+luDMwmtjtwMcPV+
+          cGrdAoGAbDUnt4tITZ/sGSiKY0znTXBTgfQuVi7rk3uIeau7uxAaOny006eHyecx
+          rfslBuyXgqLKB9/rbfA9Vy02hQwc+0xRkQtpaDGIOugSST7ZrLfX8MhFPS/wFDqV
+          KCaxWx68GyDxcw8j7w5J2etgl+RSH3uuBDwFszz1yVkwfECVMUk=
+          -----END RSA PRIVATE KEY-----
+        DOC
+    }
+    let(:private_key) {
+      <<-DOC.strip_heredoc
+            -----BEGIN RSA PRIVATE KEY-----
+            MIIEpAIBAAKCAQEAzPB6oj/SvD5OvlfNEjI72+Dk3Z96zTR8nEwucDa4nPCdmUq5
+            s8/his/EV2hvQ51NYEFDl66gwp/XedVwy20ZJwUtOTxTxoQ+D3kO5h4aQywXnyv1
+            h/vi4pFEF1G5OAQaRvoax3B4T5Ta9rJnriTWXDZgvSbJV0MPgazuuQF7risPNJYH
+            jHyRCbFO6JOTIB8IgeaLZbWoVW907e6cpAS1wa0Q6C1xxZDHXRBQN31e+dNJkyyJ
+            u+Rh56AXm7/+q+RySa2E1So4VaYO0QWK0Ux1x8vN+nS8wyOP4VndXH6++fvSRx4V
+            mzLv6Iq87aSS8rg3YYGpFQwyD4EXWSRVlz86qQIDAQABAoIBABKmX8KcJEVVNj1E
+            KDlbsO7VjH5OoRJDkIN4u1Ei6bH+g5kLn9KpPFExjyCVNGrmyb/UsJ4BGkgb27QO
+            pHEewIc4hWEMCGOsbSljTuPKIYGzZYLqsTFqzr7nkVa97SkX1nxXDlDP/2LenP6O
+            RbknSQqjODJ+cRwr0iFu51qWs/apcrEOJgT/jenFaUKOqu9JbfMJ+PIEqqPLm5Ia
+            WgieJcqJ41Qgvcwun37FxygdYFpcrev8er/9kvYtGvsR0caX1Pji4ycdZP9F8Apm
+            yhMlXd1gIJadeYv6Mtoa7g1hvQcAtltTgzXH7ctBguf3zGSDHqauvp4c/ZBAnUfJ
+            TkaJNAECgYEA9g5ZGsT23Y+6a4Fg3eYJ3KEDUog6uWrPPQvAy/X8SsdFbisFJ1/X
+            0lsCo9DS9CskbySRUVw3Nx6FOMOBAOlWmgFDuOxzKgtM3lMRQ0HykvQblkhTH/Nq
+            yqiV9awPsmG228S+3SESRcN2UfzcUmMZYiMPXsOftNs5WSnoYikfjMkCgYEA1Ti+
+            xHednRlT/VSobYufgYj7bptOx2gKLrXMdQm2ElplqrjcqU5aiaM427VHq+RFwzly
+            7PqIeA9TexTSGWKtoJ9MQ1L4z5eoXwHeHDWT4E4xw67HzuJymL09HcKkg+RtmMLZ
+            iBbAiFsFuw86akUf/CRJ4r9/j7GyePk12l6FjuECgYEAjvdRQKOXCK9dUt+up9/k
+            dQQ9CPRMorVzynWMxTWdLNnR9qwaZ4FhxkDJLOPF3sc+eTGXGd3p2yXppEy8JQpv
+            HjaD4evJEnHUbQ1450pnJomdidlmKxdlQnFoCIG78Rqjg9gySgvQMSbcFdFFNr2L
+            3yCd6qLhpdUG4k7eTkK0qTkCgYEApEEAhGz5GCqIzyDGVw02JR2XQ4+U0nxNS8p0
+            5LxEbEMDCs85/ZsEl/8LMAWoXryNGWVKKVCejI6R6sERUMj5pEDTCRID5jeYVwgj
+            SGvlrOfP4kTkW3WKfitZx3FINupjm0iPNwz/6IrmEUIb5/20NBLocCrBY7qqGBMy
+            7zPdg0ECgYBFxm3QfgG21SXMcI7Y9I+p6/LnDgtlk7vwrMAtH7HsKA1WE0MVlPtM
+            tyM4bLlbNGUdAaS8c20aayT89JZQD8xYWrR2toxf1aWP+a1LCB7sf6CWEzJAFBRz
+            tI3N7MDYHnZFmkayHI3/UrGBTlGSpl21LQJ578Ig66TiOSsEVcUPZQ==
+            -----END RSA PRIVATE KEY-----
+          DOC
+    }
+
     describe "register" do
       let(:key_path) { File.join(@current_dir, "account_key.pem") }
       specify "register EMAIL" do
@@ -100,37 +164,6 @@ module Letsencrypt::Cli
     # authorization and copy the verification to a live server that i provide
     # VCR will record that transaction for further replay
     describe "authorization & certificate creation" do
-      let(:account_key) {
-        <<-DOC.strip_heredoc
-          -----BEGIN RSA PRIVATE KEY-----
-          MIIEogIBAAKCAQEAsVV526Ht43vXCoJjKp4VN1wzDclaIfbyWt/XL8apRbORvB00
-          cwznEvLdTd1oeeZ5/PNxHNU6GIG1eWE9Qsl2TdiZe67gfzuoXoKKPU3m8SlLyzM8
-          4c+GhUqGKhfHo0FDgwxu5efReZOUiUKOGJ+m1wBYJ1zwAx8qcwCnrtXlY/DlzO6S
-          1/Y9+sxZXuy7CSM3OWl7S83IMOvfCY6Cp+ZLSJLVQpLZIDpDMDVKm/Gl9Rs/jhQI
-          r7I0iSFmqbbzhVX9F0gGdM5rUgJzDCUanQaulTF+i5hJgXbmdLWu/Gtaz9rMlPQd
-          hUJXCc5/9IZgw5KYEryL/GewMuHYeh3nUOI1ywIDAQABAoIBAH2CMazw/p1ymNAn
-          WGhhWkLETp4DVHeVgBIxOuvlfwiF/y9UvDpxd1pB6b+iZL9iEBSnd/cgMu4FX5t4
-          5xLN451VH8waCWoDnzbEzXJ2IG2u/KXkrcJkTqEoDazdB77UAiROOG8fk3KosQg0
-          wr1KwZqJ89poPLb45+JdJFDpsmD4gPtURwBV7osJRcXZrbQ/+7UmyEoNGVB76PCP
-          /yOxG3LgjC/CKzFqES2q3rfyV+v0o2W1LYgCE0OONIWfpXrRYz/AZoavszef28Fl
-          +LgCyP8iLVAnsT2rg/Onw2oVZ9lkpdEo8v1Ym/EZhHx4Hyl/mrwmnx/9MW7e3yGy
-          HxsjiYECgYEA2lZp6005C737plID/2xVpYKRC/sYZJm8ehV8KzTWm+ZxmDPwtLz3
-          noePKnc8Glf+MX3N+5IBC2S6tj5+/LcT2zcCvDVks3iKiPAKHBN9cpx/ksS2ixTR
-          Sp+mMcFbyxDXu5LQT/C7+qI25yjpPTh4aBL+JWt2UgC7NLWEhoItk80CgYEAz+xg
-          ygtUeJzC1LMxY6u9UjGT1b75MJAXf+gDPixqNCyMzP6otGVDKKJQC/53d31A/8oF
-          1azWt4yYLzSfTzsaI+aby6pn5bp0t4DaeY8fyny9VQZvSolz4iDwdGPPQ4tfQzj8
-          IW+5tDdCLH+waeogbxK43QlpuLtJ+SgzpRVWB/cCgYAtRnoUVyEbNDw40w0NLFPe
-          TGLzjxAR3GdfEZF8DCrsjS7FFxA1CnJ2pzmi3rLR66lEbggGwNICoNKu8+q1UOmH
-          LbMdgBzvsnFX0B7oj4oV+CnkL3KDCMAVr2FxM91rEIUL2nfj+9GfOYAVE0C6dzlQ
-          q4+UBuK0Qn6PgYyHr/rviQKBgHqSFDTHHRLFBq2wvQrOsRqFE2tL20ZfixrhwRej
-          wy/im1Y1QWqmz0Ji/OE1L2QHOIwRogLmkuU9QnGBifCBHNXRGkKjv//TPP74PNKw
-          JsONaWd4FZ9RDDlfxaA3PnXI8W2FaEylukmc0au90ld9p4US+luDMwmtjtwMcPV+
-          cGrdAoGAbDUnt4tITZ/sGSiKY0znTXBTgfQuVi7rk3uIeau7uxAaOny006eHyecx
-          rfslBuyXgqLKB9/rbfA9Vy02hQwc+0xRkQtpaDGIOugSST7ZrLfX8MhFPS/wFDqV
-          KCaxWx68GyDxcw8j7w5J2etgl+RSH3uuBDwFszz1yVkwfECVMUk=
-          -----END RSA PRIVATE KEY-----
-        DOC
-      }
       let(:key_path) { File.join(@current_dir, "account_key.pem") }
 
       specify "validate" do
@@ -159,35 +192,7 @@ module Letsencrypt::Cli
           File.write(key_path, account_key)
           private_key_path = File.join(@current_dir, "key.pem")
           # We need to fixate private key to verify the generated certificates match
-          File.write private_key_path, <<-DOC.strip_heredoc
-            -----BEGIN RSA PRIVATE KEY-----
-            MIIEpAIBAAKCAQEAzPB6oj/SvD5OvlfNEjI72+Dk3Z96zTR8nEwucDa4nPCdmUq5
-            s8/his/EV2hvQ51NYEFDl66gwp/XedVwy20ZJwUtOTxTxoQ+D3kO5h4aQywXnyv1
-            h/vi4pFEF1G5OAQaRvoax3B4T5Ta9rJnriTWXDZgvSbJV0MPgazuuQF7risPNJYH
-            jHyRCbFO6JOTIB8IgeaLZbWoVW907e6cpAS1wa0Q6C1xxZDHXRBQN31e+dNJkyyJ
-            u+Rh56AXm7/+q+RySa2E1So4VaYO0QWK0Ux1x8vN+nS8wyOP4VndXH6++fvSRx4V
-            mzLv6Iq87aSS8rg3YYGpFQwyD4EXWSRVlz86qQIDAQABAoIBABKmX8KcJEVVNj1E
-            KDlbsO7VjH5OoRJDkIN4u1Ei6bH+g5kLn9KpPFExjyCVNGrmyb/UsJ4BGkgb27QO
-            pHEewIc4hWEMCGOsbSljTuPKIYGzZYLqsTFqzr7nkVa97SkX1nxXDlDP/2LenP6O
-            RbknSQqjODJ+cRwr0iFu51qWs/apcrEOJgT/jenFaUKOqu9JbfMJ+PIEqqPLm5Ia
-            WgieJcqJ41Qgvcwun37FxygdYFpcrev8er/9kvYtGvsR0caX1Pji4ycdZP9F8Apm
-            yhMlXd1gIJadeYv6Mtoa7g1hvQcAtltTgzXH7ctBguf3zGSDHqauvp4c/ZBAnUfJ
-            TkaJNAECgYEA9g5ZGsT23Y+6a4Fg3eYJ3KEDUog6uWrPPQvAy/X8SsdFbisFJ1/X
-            0lsCo9DS9CskbySRUVw3Nx6FOMOBAOlWmgFDuOxzKgtM3lMRQ0HykvQblkhTH/Nq
-            yqiV9awPsmG228S+3SESRcN2UfzcUmMZYiMPXsOftNs5WSnoYikfjMkCgYEA1Ti+
-            xHednRlT/VSobYufgYj7bptOx2gKLrXMdQm2ElplqrjcqU5aiaM427VHq+RFwzly
-            7PqIeA9TexTSGWKtoJ9MQ1L4z5eoXwHeHDWT4E4xw67HzuJymL09HcKkg+RtmMLZ
-            iBbAiFsFuw86akUf/CRJ4r9/j7GyePk12l6FjuECgYEAjvdRQKOXCK9dUt+up9/k
-            dQQ9CPRMorVzynWMxTWdLNnR9qwaZ4FhxkDJLOPF3sc+eTGXGd3p2yXppEy8JQpv
-            HjaD4evJEnHUbQ1450pnJomdidlmKxdlQnFoCIG78Rqjg9gySgvQMSbcFdFFNr2L
-            3yCd6qLhpdUG4k7eTkK0qTkCgYEApEEAhGz5GCqIzyDGVw02JR2XQ4+U0nxNS8p0
-            5LxEbEMDCs85/ZsEl/8LMAWoXryNGWVKKVCejI6R6sERUMj5pEDTCRID5jeYVwgj
-            SGvlrOfP4kTkW3WKfitZx3FINupjm0iPNwz/6IrmEUIb5/20NBLocCrBY7qqGBMy
-            7zPdg0ECgYBFxm3QfgG21SXMcI7Y9I+p6/LnDgtlk7vwrMAtH7HsKA1WE0MVlPtM
-            tyM4bLlbNGUdAaS8c20aayT89JZQD8xYWrR2toxf1aWP+a1LCB7sf6CWEzJAFBRz
-            tI3N7MDYHnZFmkayHI3/UrGBTlGSpl21LQJ578Ig66TiOSsEVcUPZQ==
-            -----END RSA PRIVATE KEY-----
-          DOC
+          File.write private_key_path, private_key
           File.chmod(0400, private_key_path)
           VCR.use_cassette "certificate/stw" do
             cert_path = File.join(@current_dir, "cert.pem")
@@ -296,6 +301,46 @@ module Letsencrypt::Cli
         end
       end
 
+      describe 'revoke CERT', freeze_time: '2016-01-16 21:00 CET' do
+        let(:cert_path) { File.join(@current_dir, "cert.pem") }
+        let(:key_path) { File.join(@current_dir, "account_key.pem") }
+
+        specify 'revoke without error' do
+          Timecop.freeze Time.parse("2015-12-05 12:00") do
+            File.write(cert_path, cert)
+            File.write(key_path, account_key)
+            VCR.use_cassette("revoke") do
+              stdout = capture(:stdout) {
+                app.invoke("revoke", [cert_path],
+                           color: false,
+                           test: true,
+                           account_key: key_path,
+                          )
+              }
+              expect(stdout).to include "was revoked"
+            end
+          end
+        end
+
+        # executed with vcr after the other example
+        specify 'already revoked cert gives error' do
+          Timecop.freeze Time.parse("2015-12-05 12:00") do
+            File.write(cert_path, cert)
+            File.write(key_path, account_key)
+            VCR.use_cassette("revoke_again") do
+              stderr = capture(:stderr) {
+                app.invoke("revoke", [cert_path],
+                           color: false,
+                           test: true,
+                           account_key: key_path,
+                          )
+              }
+              expect(stderr).to include "Certificate already revoked"
+            end
+          end
+        end
+      end
+
       specify "cert still valid" do
         Timecop.freeze Time.parse("2015-12-05 12:00") do
           cert_path = File.join(@current_dir, "cert.pem")
@@ -309,6 +354,7 @@ module Letsencrypt::Cli
         end
       end
     end
+
     describe 'manage DOMAINS' do
       specify 'manage calls out to the other functions and creates the given work dir' do
         expect_any_instance_of(Letsencrypt::Cli::App).to receive(:authorize).with("example.com")

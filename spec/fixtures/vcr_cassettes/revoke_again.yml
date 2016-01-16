@@ -1,0 +1,85 @@
+---
+http_interactions:
+- request:
+    method: head
+    uri: https://acme-staging.api.letsencrypt.org/acme/revoke-cert
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/problem+json
+      Content-Length:
+      - '78'
+      Allow:
+      - POST
+      Replay-Nonce:
+      - jPlM2-TLBEH0La6yONIjm1tJeR2qFXOh6y0dm57b4Lw
+      Expires:
+      - Sat, 16 Jan 2016 20:11:32 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Sat, 16 Jan 2016 20:11:32 GMT
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Sat, 05 Dec 2015 17:00:00 GMT
+- request:
+    method: post
+    uri: https://acme-staging.api.letsencrypt.org/acme/revoke-cert
+    body:
+      encoding: UTF-8
+      string: '{"protected":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIm5vbmNlIjoialBsTTItVExCRUgwTGE2eU9OSWptMXRKZVIycUZYT2g2eTBkbTU3YjRMdyIsImp3ayI6eyJrdHkiOiJSU0EiLCJlIjoiQVFBQiIsIm4iOiJzVlY1MjZIdDQzdlhDb0pqS3A0Vk4xd3pEY2xhSWZieVd0X1hMOGFwUmJPUnZCMDBjd3puRXZMZFRkMW9lZVo1X1BOeEhOVTZHSUcxZVdFOVFzbDJUZGlaZTY3Z2Z6dW9Yb0tLUFUzbThTbEx5ek04NGMtR2hVcUdLaGZIbzBGRGd3eHU1ZWZSZVpPVWlVS09HSi1tMXdCWUoxendBeDhxY3dDbnJ0WGxZX0Rsek82UzFfWTktc3haWHV5N0NTTTNPV2w3UzgzSU1PdmZDWTZDcC1aTFNKTFZRcExaSURwRE1EVkttX0dsOVJzX2poUUlyN0kwaVNGbXFiYnpoVlg5RjBnR2RNNXJVZ0p6RENVYW5RYXVsVEYtaTVoSmdYYm1kTFd1X0d0YXo5ck1sUFFkaFVKWENjNV85SVpndzVLWUVyeUxfR2V3TXVIWWVoM25VT0kxeXcifX0","payload":"eyJyZXNvdXJjZSI6InJldm9rZS1jZXJ0IiwiY2VydGlmaWNhdGUiOiJNSUlFLURDQ0EtQ2dBd0lCQWdJVEFQcHdtdXJ3RkdXdjJKc2hzdlRLUlNQOGVUQU5CZ2txaGtpRzl3MEJBUXNGQURBZk1SMHdHd1lEVlFRRERCUm9ZWEJ3ZVNCb1lXTnJaWElnWm1GclpTQkRRVEFlRncweE5URXlNRFF5TWpBeE1EQmFGdzB4TmpBek1ETXlNakF4TURCYU1Cc3hHVEFYQmdOVkJBTVRFSE4wWldaaGJuZHBaVzVsY25RdVpHVXdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBd2dnRUtBb0lCQVFDa0VVWUFCRG45b0xfWjFFREJEaEJLOVN0TEM5Z3dmVUk3NVlvUFJVTnRpbkFMd1NfR0FtWnlHUW13WHpHcnRRZVcxelRtSlNobVdqeUVVRTZmYUdRVUhuMUJYbG95c2JiWWJvYTM0bk1sQXlmZjFjdVh2dmduRjJlejFDYlpCOThwRG9BeUdQbmhYdWMxQ3ExOE1vaGJSaTlQOUVxUDU4TFlBT2VISGE2eEZBMEMtc191SzBkMTdqekphNHZNaHViTHluaVBSNmhjZ0R4YkJjYXRSU1dXRDFVYklPcjJsMDY1amFiRU1qQ01sWUlFZzlEVnNqUzBFNUJYME1NVngydmNzSFZONlYxS0Y3Ty1GajllU2p4dnI5VlNXMlgtZnJSMU5XN3hmb0Yta3pxWEZJbDlRRzhJN1JrZUc0NktISjdxLTZRV2FFaEROSFJ6UThMdWtOMUJBZ01CQUFHamdnSXZNSUlDS3pBT0JnTlZIUThCQWY4RUJBTUNCYUF3SFFZRFZSMGxCQll3RkFZSUt3WUJCUVVIQXdFR0NDc0dBUVVGQndNQ01Bd0dBMVVkRXdFQl93UUNNQUF3SFFZRFZSME9CQllFRklhdDZjTFctWUt3cko0d2thT01lT1RKcG9Lc01COEdBMVVkSXdRWU1CYUFGUHQ0VHhMNVlCV0RMSjhYZnpRWnN5NDI2a0dKTUhnR0NDc0dBUVVGQndFQkJHd3dhakF6QmdnckJnRUZCUWN3QVlZbmFIUjBjRG92TDI5amMzQXVjM1JoWjJsdVp5MTRNUzVzWlhSelpXNWpjbmx3ZEM1dmNtY3ZNRE1HQ0NzR0FRVUZCekFDaGlkb2RIUndPaTh2WTJWeWRDNXpkR0ZuYVc1bkxYZ3hMbXhsZEhObGJtTnllWEIwTG05eVp5OHdNUVlEVlIwUkJDb3dLSUlRYzNSbFptRnVkMmxsYm1WeWRDNWtaWUlVZDNkM0xuTjBaV1poYm5kcFpXNWxjblF1WkdVd2dmNEdBMVVkSUFTQjlqQ0I4ekFJQmdabmdRd0JBZ0V3Z2VZR0N5c0dBUVFCZ3Q4VEFRRUJNSUhXTUNZR0NDc0dBUVVGQndJQkZocG9kSFJ3T2k4dlkzQnpMbXhsZEhObGJtTnllWEIwTG05eVp6Q0Jxd1lJS3dZQkJRVUhBZ0l3Z1o0TWdadFVhR2x6SUVObGNuUnBabWxqWVhSbElHMWhlU0J2Ym14NUlHSmxJSEpsYkdsbFpDQjFjRzl1SUdKNUlGSmxiSGxwYm1jZ1VHRnlkR2xsY3lCaGJtUWdiMjVzZVNCcGJpQmhZMk52Y21SaGJtTmxJSGRwZEdnZ2RHaGxJRU5sY25ScFptbGpZWFJsSUZCdmJHbGplU0JtYjNWdVpDQmhkQ0JvZEhSd2N6b3ZMMnhsZEhObGJtTnllWEIwTG05eVp5OXlaWEJ2YzJsMGIzSjVMekFOQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBTEJRNnZsb3hNT0YwUERxUVF4Y2w3YTlVY3RfM0N6U25Ra2Q4NDBiWUE5S2ZmYUN0eWJHeWNXY0tMNW8tRTFIaDhLNnNvWWlNRUktbnJCN2pTVk4ybmNrcVN4N3lRZW5fT0dZRnNaaXlzQnBld2J5QS1pZmU2NUNQYTdNeUFPU01MdjlsTk1INWJrR2JSNzJ5QktWeWo0TEF4NkR4c1lLU0pTMVAtdzVDYmt4S01IQVg5enZ1UGE1SVc2Z0xZZC1BWTZYZzZpU3F0RlBmR2MxQy10V3JkNHdfd2NRdEtQbVFWX2I4UDh0ZzdQQWRJdE5ESllHT2F1ZGNSbW1YaXVMUEhVUWNxaE5pa1JOSHpaaHNTWEFJUkpudFZHNGlmazViYlZQUG5nSFZEbFhuWk05VDB5QS1Tc21rNmtsajBRMU1aTVZoaXZNR3ZaeFF4RnNYekhYc1RnPT0ifQ","signature":"fFJudUz01J-HeFYvnHGnamd2d7MHNjR4ityHN-T_kJC_YTmXgywB3UbzPfvm-hCzitEY_RvCpnYZt8VCzEoaGc_7P_yOnH96oWbHhzWz_1HG5WqP3cx769FygJhkbf8-5pEPab_Nhsdkg_YoNUaTK1xt0vtDEVcBm2_bPy9alw7b-T_SgtD0ZDkAXCYteIykE_AxpOxvEn-LzT5S9y_hvtxe9nZaD5L7P2Lg_1_7grtv4JbvgLZcR04f29uA5L1ZZ_eN4Qif5PQhA9YWQcUmXVNRrlB2PIr0uQEmnQQivgp8GzaECGfsaUO6ETiujIMCXMuldIxM3JY3a02y-JpK5g"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 409
+      message: Conflict
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/problem+json
+      Content-Length:
+      - '87'
+      Replay-Nonce:
+      - 9jis4IYlEHtbeM3sF0zjBESBfcnH2U0fhDbonbSh0-s
+      Expires:
+      - Sat, 16 Jan 2016 20:11:32 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Sat, 16 Jan 2016 20:11:32 GMT
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"type":"urn:acme:error:malformed","detail":"Certificate already revoked","status":409}'
+    http_version: 
+  recorded_at: Sat, 05 Dec 2015 17:00:00 GMT
+recorded_with: VCR 3.0.1
