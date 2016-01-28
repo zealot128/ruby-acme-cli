@@ -73,7 +73,9 @@ module Letsencrypt
 
       desc "revoke PATH_TO_CERTIFICATE", "revokes a given certificate"
       def revoke(path)
-        wrapper.revoke_certificate(path)
+        if !wrapper.revoke_certificate(path)
+          exit 1
+        end
       end
 
       desc "manage DOMAINS", "meta command that will: check if cert already exists / still valid (exits zero if nothing todo, exits 2 if certificate is still valid) + authorize given domains + issue certificate for given domains"

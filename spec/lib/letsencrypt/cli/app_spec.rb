@@ -311,11 +311,13 @@ module Letsencrypt::Cli
             File.write(key_path, account_key)
             VCR.use_cassette("revoke") do
               stdout = capture(:stdout) {
-                app.invoke("revoke", [cert_path],
-                           color: false,
-                           test: true,
-                           account_key: key_path,
-                          )
+                expect {
+                  app.invoke("revoke", [cert_path],
+                            color: false,
+                            test: true,
+                            account_key: key_path,
+                            )
+                }.to raise(SystemExit)
               }
               expect(stdout).to include "was revoked"
             end
