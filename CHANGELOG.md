@@ -1,10 +1,11 @@
 # Change Log
 
-## [unreleased](https://github.com/zealot128/ruby-letsencrypt-cli/tree)
+## [v0.3.0](https://github.com/zealot128/ruby-letsencrypt-cli/tree/v0.3.0)
 
+* Certificate creation checks if existing certificate includes all requested domains. If at least one is missing, a new cert will be requested
 * Added Ruby 2.3.0 and Ruby head to the build matrix
 
-[Full Changelog](https://github.com/zealot128/ruby-letsencrypt-cli/compare/v0.2.0...master)
+[Full Changelog](https://github.com/zealot128/ruby-letsencrypt-cli/compare/v0.2.0...v0.3.0)
 
 ## [v0.2.0](https://github.com/zealot128/ruby-letsencrypt-cli/tree/v0.2.0)
 
