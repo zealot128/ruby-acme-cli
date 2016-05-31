@@ -53,7 +53,7 @@ class AcmeWrapper
   end
 
   def cert(domains)
-    return if certificate_exists_and_valid?
+    return if certificate_exists_and_valid_and_all_domains_included?(domains)
     csr = OpenSSL::X509::Request.new
     certificate_private_key = find_or_create_pkey(@options[:private_key_path], "private key", @options[:key_length] || 2048)
 
@@ -122,16 +122,24 @@ class AcmeWrapper
 
   private
 
-  def certificate_exists_and_valid?
-    if File.exists?(@options[:certificate_path])
-      cert = OpenSSL::X509::Certificate.new(File.read(@options[:certificate_path]))
-      renew_on = cert.not_after.to_date - @options[:days_valid]
-      if renew_on > Date.today
-        log "Certificate '#{@options[:certificate_path]}' still valid till #{cert.not_after.to_date}.", :warn
-        log "Won't renew until #{renew_on} (#{@options[:days_valid]} days before)", :warn
-        exit 2
-      end
+  def certificate_exists_and_valid_and_all_domains_included?(domains)
+    return false if !File.exists?(@options[:certificate_path])
+    cert = OpenSSL::X509::Certificate.new(File.read(@options[:certificate_path]))
+    domains_in_cert = cert.extensions.map(&:to_h).select{|i| i['oid'] == 'subjectAltName' }.map{|i| i['value']}.join(', ').split(/, */).map{|i| i.sub(/^DNS:/, '') }  +
+      [ cert.subject.to_s.sub(%r{/CN=}, '') ].uniq.sort
+    missing_domains = domains.sort.uniq - domains_in_cert
+    if missing_domains != []
+      log "Certificate '#{@options[:certificate_path]}' missing domains #{missing_domains.join(' ')}. Existing: #{domains_in_cert.join(' ')}", :warn
+      return false
     end
+    renew_on = cert.not_after.to_date - @options[:days_valid]
+    if renew_on > Date.today
+      log "Certificate '#{@options[:certificate_path]}' still valid till #{cert.not_after.to_date}.", :warn
+      log "Won't renew until #{renew_on} (#{@options[:days_valid]} days before)", :warn
+      exit 2
+    end
+
+    true
   end
 
   def endpoint

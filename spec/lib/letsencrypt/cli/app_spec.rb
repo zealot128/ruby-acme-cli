@@ -343,13 +343,13 @@ module Letsencrypt::Cli
         end
       end
 
-      specify "cert still valid" do
+      specify "cert still valid but missing new domains" do
         Timecop.freeze Time.parse("2015-12-05 12:00") do
           cert_path = File.join(@current_dir, "cert.pem")
           File.write(cert_path, cert)
           out = capture(:stdout) do
             expect {
-              app.invoke("cert", ['example.com'], certificate_path: cert_path, color: false, test: true)
+              app.invoke("cert", ['stefanwienert.de'], certificate_path: cert_path, color: false, test: true)
             }.to raise_error(SystemExit)
           end
           expect(out).to include 'still valid till 2016-03-03'
