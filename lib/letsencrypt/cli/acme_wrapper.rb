@@ -132,7 +132,12 @@ class AcmeWrapper
       log "Certificate '#{@options[:certificate_path]}' missing domains #{missing_domains.join(' ')}. Existing: #{domains_in_cert.join(' ')}", :warn
       return false
     end
-    renew_on = cert.not_after.to_date - @options[:days_valid]
+    expires_on = cert.not_after.to_date
+    if expires_on <= Date.today
+      log "Certificate '#{@options[:certificate_path]}' has expired on #{expires_on}.", :warn
+      return false
+    end
+    renew_on = expires_on - @options[:days_valid]
     if renew_on > Date.today
       log "Certificate '#{@options[:certificate_path]}' still valid till #{cert.not_after.to_date}.", :warn
       log "Won't renew until #{renew_on} (#{@options[:days_valid]} days before)", :warn
