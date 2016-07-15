@@ -82,10 +82,10 @@ module Letsencrypt
       method_option :key_length, desc: "Length of private key", default: 2048, type: :numeric
       method_option :days_valid, desc: "If the --certificate-path already exists, only create new stuff, if that certificate isn't valid for less than the given number of days", default: 30, type: :numeric
       method_option :webroot_path, desc: "Path to mapped .well-known/acme-challenge folder (no subdirs will be created)", aliases: '-w', required: true
-      method_option :key_directory, desc: "Base directory of key creation. If subfolder not set a subfolder with the first domain will be created where all certs + key are stored", default: "~/certs/"
-      method_option :subfolder, desc: "Subfolder name in base directory where all certs + key are stored", default: nil
+      method_option :key_directory, desc: "Base directory for certificate storage.", default: "~/certs/"
+      method_option :sub_directory, desc: "Sub-directory name in base directory where all certs + key are stored. If not set, the first domain name will be used", default: nil
       def manage(*domains)
-        key_dir = File.join(@options[:key_directory], @options[:subfolder] || domains.first)
+        key_dir = File.join(@options[:key_directory], @options[:sub_directory] || domains.first)
         FileUtils.mkdir_p(key_dir)
         @options = @options.merge(
           :private_key_path  => File.join(key_dir, 'key.pem'),
