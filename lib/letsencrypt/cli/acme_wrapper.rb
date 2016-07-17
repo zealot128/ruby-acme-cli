@@ -144,7 +144,7 @@ class AcmeWrapper
       exit 2
     end
 
-    true
+    false 
   end
 
   def endpoint
