@@ -3,6 +3,7 @@ require 'timecop'
 require 'vcr'
 require 'webmock'
 require 'pry'
+require 'active_support/all'
 SimpleCov.start
 Dir['spec/support/**/*'].each {|f| load f }
 
