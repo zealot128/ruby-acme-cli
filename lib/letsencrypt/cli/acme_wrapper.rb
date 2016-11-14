@@ -80,6 +80,7 @@ class AcmeWrapper
         csr.add_attribute(attr)
       end
     end
+    csr.version = 2
     csr.public_key = certificate_private_key.public_key
     csr.sign(certificate_private_key, OpenSSL::Digest::SHA256.new)
     certificate = client.new_certificate(csr)
