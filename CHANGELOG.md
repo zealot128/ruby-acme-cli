@@ -1,5 +1,20 @@
 # Change Log
 
+## [v0.5.0](https://github.com/zealot128/ruby-letsencrypt-cli/tree/v0.5.0)
+
+* fix for CSR generated using a pre-1.0.2 OpenSSL with a client that doesn't properly specify the CSR version. See https://community.letsencrypt.org/t/openssl-bug-information/19591 (Acme::Client::Error::Malformed) https://github.com/zealot128/ruby-letsencrypt-cli/commit/b7fd1d592e9a74905f5067b64e0ac88a526cfeed
+* explicitly require colorize Gem so color support does work https://github.com/zealot128/ruby-letsencrypt-cli/commit/b43510d1be1a495923ea8e27051b3a0bae4e23b0
+
+## [v0.4.1](https://github.com/zealot128/ruby-letsencrypt-cli/tree/v0.4.1)
+
+*  fix renewing via manage command when certificate is not expired https://github.com/zealot128/ruby-letsencrypt-cli/commit/8e6b9cd4a2b1d0caa7a85d6ead410b98555cb499
+*  require logger in beginning of file
+
+## [v0.4.0](https://github.com/zealot128/ruby-letsencrypt-cli/tree/v0.4.0)
+
+* New ``--sub-directory`` option to use that instead of first domain name
+* Solves issue #10 -- certificate_exists_and_valid_and_all_domains_included? returns true when cert is expired
+
 ## [v0.3.0](https://github.com/zealot128/ruby-letsencrypt-cli/tree/v0.3.0)
 
 * Certificate creation checks if existing certificate includes all requested domains. If at least one is missing, a new cert will be requested
