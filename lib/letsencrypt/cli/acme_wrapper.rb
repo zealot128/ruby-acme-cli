@@ -1,6 +1,7 @@
 require 'json'
 require 'acme-client'
 require 'logger'
+require 'colorize'
 
 class AcmeWrapper
   def initialize(options)
