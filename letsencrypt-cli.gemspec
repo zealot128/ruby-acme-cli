@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["stwienert@gmail.com"]
 
   spec.summary       = %q{slim letsencrypt client for quickly authorizing (multiple) domains and issuing certificates}
-  spec.homepage      = "https://github.com/zealot28/letsencrypt-cli"
+  spec.homepage      = "https://github.com/zealot128/letsencrypt-cli"
   spec.license       = "MIT"
   spec.required_ruby_version = '>= 2.0.0'
 
