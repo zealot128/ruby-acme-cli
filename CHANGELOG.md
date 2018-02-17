@@ -1,5 +1,9 @@
 # Change Log
 
+## [v0.6.0](https://github.com/zealot128/ruby-acme-cli/tree/v0.6.0)
+
+* Rename to acme-client for trademark reasons (#22)
+
 ## [v0.5.0](https://github.com/zealot128/ruby-letsencrypt-cli/tree/v0.5.0)
 
 * fix for CSR generated using a pre-1.0.2 OpenSSL with a client that doesn't properly specify the CSR version. See https://community.letsencrypt.org/t/openssl-bug-information/19591 (Acme::Client::Error::Malformed) https://github.com/zealot128/ruby-letsencrypt-cli/commit/b7fd1d592e9a74905f5067b64e0ac88a526cfeed

@@ -1,9 +1,9 @@
-# Letsencrypt-Cli
+# ACME-Cli
 
-[![Build Status](https://travis-ci.org/zealot128/ruby-letsencrypt-cli.svg?branch=travis)](https://travis-ci.org/zealot128/ruby-letsencrypt-cli)
-[![Gem Version](https://badge.fury.io/rb/letsencrypt-cli.svg)](https://badge.fury.io/rb/letsencrypt-cli)
+[![Build Status](https://travis-ci.org/zealot128/ruby-acme-cli.svg?branch=travis)](https://travis-ci.org/zealot128/ruby-acme-cli)
+[![Gem Version](https://badge.fury.io/rb/acme-cli.svg)](https://badge.fury.io/rb/acme-cli)
 
-Yet another Letsencrypt client using Ruby.
+Yet another ACME client (e.g. to use together with Letsencrypt CA to issue TLS certs) for command lines using Ruby.
 
 ## Installation
 
@@ -16,15 +16,15 @@ Yet another Letsencrypt client using Ruby.
 $ ruby --version
 ruby 2.2.3p173 (2015-08-18 revision 51636) [x86_64-linux]
 
-$ gem install letsencrypt-cli
+$ gem install acme-cli
 
-$ letsencrypt-cli --version
+$ acme-cli --version
 0.2.0
 ```
 
 ### Troubleshooting Ruby version
 
-Unfortunately, most Linux distributions does not ship a current Ruby version (Version 1.9.3 or 2.0).
+Unfortunately, most Linux distributions does not ship a current Ruby version (Version 1.9.3 or 2.0). Check, if your ruby version is at least 2.2. Otherwise you need to update the Ruby.
 
 If you are installing this as a non-root user, you might want to try RVM. Installation itself needs no root, but needs some packages:
 
@@ -47,7 +47,7 @@ ruby --version
 Notice: If you are using RVM, all your cronjobs must be run as a login shell, otherwise RVM does not work:
 
 ```cron
-* * * * * /bin/bash -l -c "letsencrypt-cli manage ..."
+* * * * * /bin/bash -l -c "acme-cli manage ..."
 ```
 
 Another way, e.g. on Ubuntu 14.04 might be to use the [Brightbox ppa](https://www.brightbox.com/blog/2015/01/05/ruby-2-2-0-packages-for-ubuntu/).
@@ -59,74 +59,73 @@ Specify ``-t`` to use Letsencrypt test server. Without it, all requests are call
 ```bash
 # show all commands
 
-letsencrypt-cli help
+acme-cli help
 
 # show options for an individual command
-letsencrypt-cli help cert
+acme-cli help cert
 
 # creates account_key.json in current_dir
-letsencrypt-cli register -t myemail@example.com
+acme-cli register -t myemail@example.com
 
 # authorize one or more domains/subdomains
-letsencrypt-cli authorize -t --webroot-path /var/www/default example.com www.example.com somedir.example.com
+acme-cli authorize -t --webroot-path /var/www/default example.com www.example.com somedir.example.com
 
 # experimental: authorize all server_names in /etc/nginx/sites-enabled/*
-letsencrypt-cli authorize_all -t --webroot-path /var/www/default
+acme-cli authorize_all -t --webroot-path /var/www/default
 
 # create a certificate for domains that are already authorized within the last minutes (1h-2h I think)
 # the first domain will be the cn subject. All other are subjectAlternateName
 # if cert.pem already exists, will only create a new one if the old is expired
 # (30 days before expiration) -> see full help
-letsencrypt-cli help cert
+acme-cli help cert
 
-letsencrypt-cli cert -t example.com www.example.com somdir.example.com
+acme-cli cert -t example.com www.example.com somdir.example.com
 # will create key.pem fullchain.pem chain.pem and cert.pem in current directory
 
 # checks validation date of given certificate.
 # Exists non-zero if:
 # * not exists (exit 1)
 # * will expire in more than 30 days (exit code 2)
-letsencrypt-cli check --days-valid 30 cert.pem
+acme-cli check --days-valid 30 cert.pem
 ```
 
 
 And last but not least, the meta command ``manage`` that integrated check + authorize + cert (intended to be run as cronjob):
 
 ```bash
-$ letsencrypt-cli manage --days-valid 30 \
-                       --account-key /home/letsencrypt/account_key.pem \
-                       --webroot-path /home/letsencrypt/webroot/.well-known/acme-challenge \
-                       --key-directory /home/letsencrypt/certs \
+$ acme-cli manage --days-valid 30 \
+                       --account-key /home/acme/account_key.pem \
+                       --webroot-path /home/acme/webroot/.well-known/acme-challenge \
+                       --key-directory /home/acme/certs \
                        example.com www.example.com
 
-2015-12-05 23:40:04 +0100: Certificate /home/letsencrypt/certs/example.com/cert.pem does not exists
+2015-12-05 23:40:04 +0100: Certificate /home/acme/certs/example.com/cert.pem does not exists
 2015-12-05 23:40:04 +0100: Authorizing example.com...
 2015-12-05 23:40:04 +0100: existing account key found
 2015-12-05 23:40:06 +0100: Authorization successful for example.com
 2015-12-05 23:40:06 +0100: Authorizing www.example.com
 2015-12-05 23:40:08 +0100: Authorization successful for www.example.com
-2015-12-05 23:40:08 +0100: creating new private key to /home/letsencrypt/certs/example.com/key.pem...
-2015-12-05 23:40:09 +0100: Certificate successfully created to /home/letsencrypt/certs/example.com/fullchain.pem /home/letsencrypt/certs/example.com/chain.pem
-and /home/letsencrypt/certs/example.com/cert.pem!
+2015-12-05 23:40:08 +0100: creating new private key to /home/acme/certs/example.com/key.pem...
+2015-12-05 23:40:09 +0100: Certificate successfully created to /home/acme/certs/example.com/fullchain.pem /home/acme/certs/example.com/chain.pem and /home/acme/certs/example.com/cert.pem!
 2015-12-05 23:40:09 +0100: Certificate valid until: 2016-03-04 21:40:00 UTC
 
 # Run command again exits immediately:
-$ letsencrypt-cli manage --days-valid 30 --account-key /home/letsencrypt/account_key.pem --webroot-path /home/letsencrypt/webroot/.wel
-l-known/acme-challenge --key-directory /home/letsencrypt/certs \
+$ acme-cli manage --days-valid 30 --account-key /home/acme/account_key.pem --webroot-path /home/acme/webroot/.wel
+l-known/acme-challenge --key-directory /home/acme/certs \
       example.com www.example.com
-2015-12-05 23:40:17 +0100: Certificate '/home/letsencrypt/certs/example.com/cert.pem' valid until 2016-03-04.
+2015-12-05 23:40:17 +0100: Certificate '/home/acme/certs/example.com/cert.pem' valid until 2016-03-04.
 $ echo $?
 1
 ```
 
 This had:
 
-1. check if /home/letsencrypt/certs/example.com/cert.pem exists and expires in less than 30 days (or exit 1 at this point)
+1. check if /home/acme/certs/example.com/cert.pem exists and expires in less than 30 days (or exit 1 at this point)
 2. authorize all domains + subdomains
-3. issue one certificate with those domains and place it under /home/letsencrypt/certs/example.com/[key.pem,fullchain.pem,chain.pem,cert.pem]
+3. issue one certificate with those domains and place it under /home/acme/certs/example.com/[key.pem,fullchain.pem,chain.pem,cert.pem]
 4. exit 0 -> so can be && with ``service nginx reload`` or mail deliver
 
-For running as cron, reducing log level to fatal might be desirable: ``letsencrypt-cli manage --log-level fatal``.
+For running as cron, reducing log level to fatal might be desirable: ``acme-cli manage --log-level fatal``.
 
 ## Example integration Nginx:
 
@@ -135,7 +134,7 @@ server {
   listen 80;
   server_name example.com www.example.com somedir.example.com
   location /.well-known/acme-challenge {
-	  alias /home/letsencrypt/webroot/.well-known/acme-challenge;
+	  alias /home/acme/webroot/.well-known/acme-challenge;
 	  default_type "text/plain";
 	  try_files $uri =404;
   }
@@ -150,8 +149,8 @@ server {
   listen 443 ssl;
   server_name example.com www.example.com;
   ssl on;
-  ssl_certificate_key /home/letsencrypt/certs/example.com/key.pem;
-  ssl_certificate /home/letsencrypt/certs/example.com/fullchain.pem;
+  ssl_certificate_key /home/acme/certs/example.com/key.pem;
+  ssl_certificate /home/acme/certs/example.com/fullchain.pem;
 
   # use the settings from: https://gist.github.com/konklone/6532544
 ```
@@ -164,7 +163,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/zealot128/ruby-letsencrypt-cli/fork )
+1. Fork it ( https://github.com/zealot128/ruby-acme-cli/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

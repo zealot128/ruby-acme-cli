@@ -1,2 +1,6 @@
-require "bundler/gem_tasks"
+require "rake/clean"
+CLOBBER.include "pkg"
+
+require "bundler/gem_helper"
+Bundler::GemHelper.install_tasks name: 'acme-cli'
 
