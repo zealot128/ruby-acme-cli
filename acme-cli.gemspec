@@ -10,16 +10,16 @@ Gem::Specification.new do |spec|
   spec.email         = ["stwienert@gmail.com"]
 
   spec.summary       = %q{slim ACME (e. g. letsencrypt) client for quickly authorizing (multiple) domains and issuing certificates}
-  spec.homepage      = "https://github.com/zealot28/acme-cli"
+  spec.homepage      = "https://github.com/zealot28/ruby-acme-cli"
   spec.license       = "MIT"
-  spec.required_ruby_version = '>= 2.0.0'
+  spec.required_ruby_version = '>= 2.1.0'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency 'acme-client', '>= 0.2.4'
+  spec.add_runtime_dependency 'acme-client', '>= 2.0.0'
   spec.add_runtime_dependency 'thor'
   spec.add_runtime_dependency 'colorize'
 

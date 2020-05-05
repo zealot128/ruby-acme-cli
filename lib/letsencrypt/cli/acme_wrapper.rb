@@ -2,6 +2,7 @@ require 'json'
 require 'acme-client'
 require 'logger'
 require 'colorize'
+require_relative 'support/certificate'
 
 class AcmeWrapper
   def initialize(options)
@@ -22,28 +23,34 @@ class AcmeWrapper
   end
 
   def client
-    @client ||= Acme::Client.new(private_key: account_key, endpoint: endpoint)
+    @client ||= Acme::Client.new(private_key: account_key, directory: directory)
   end
 
-  def authorize(domain)
+  def create_order(domains)
+    log "Creating order for domains #{domains.to_s.blue}"
+    return client.new_order(identifiers: domains)
+  end
+
+  def authorize(authorization)
+    domain = authorization.domain
     FileUtils.mkdir_p(@options[:webroot_path])
     log "Authorizing #{domain.blue}.."
-    authorization = client.authorize(domain: domain)
-
-    challenge = authorization.http01
+    challenge = authorization.http
 
     challenge_file = File.join(@options[:webroot_path], challenge.filename.split('/').last)
     log "Writing challenge to #{challenge_file}", :debug
     File.write(challenge_file, challenge.file_content)
 
-    challenge.request_verification
+    challenge.request_validation
 
-    5.times do
+    10.times do
       log "Checking verification...", :debug
       sleep 1
-      break if challenge.verify_status != 'pending'
+      challenge.reload
+      break if challenge.status != 'pending'
     end
-    if challenge.verify_status == 'valid'
+
+    if challenge.status == 'valid'
       log "Authorization successful for #{domain.green}"
       File.unlink(challenge_file)
       true
@@ -84,7 +91,13 @@ class AcmeWrapper
     csr.version = 2
     csr.public_key = certificate_private_key.public_key
     csr.sign(certificate_private_key, OpenSSL::Digest::SHA256.new)
-    certificate = client.new_certificate(csr)
+    order = create_order(domains)
+    order.finalize(csr: csr)
+    while order.status == 'processing'
+      sleep(1)
+      order.reload
+    end
+    certificate = Certificate.new(order.certificate)
     File.write(@options[:fullchain_path], certificate.fullchain_to_pem)
     File.write(@options[:chain_path], certificate.chain_to_pem)
     File.write(@options[:certificate_path], certificate.to_pem)
@@ -114,7 +127,7 @@ class AcmeWrapper
       return false
     end
     cert = OpenSSL::X509::Certificate.new(File.read(path))
-    if client.revoke_certificate(cert)
+    if client.revoke(certificate: cert)
       log "Certificate '#{path}' was revoked", :info
     end
     true
@@ -147,14 +160,14 @@ class AcmeWrapper
       exit 2
     end
 
-    false 
+    false
   end
 
-  def endpoint
+  def directory
     if @options[:test]
-      "https://acme-staging.api.letsencrypt.org"
+      "https://acme-staging-v02.api.letsencrypt.org/directory"
     else
-      "https://acme-v01.api.letsencrypt.org"
+      "https://acme-v02.api.letsencrypt.org/directory"
     end
   end
 
