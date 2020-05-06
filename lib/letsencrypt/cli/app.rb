@@ -20,8 +20,7 @@ module Letsencrypt
           wrapper.log "not an email", :fatal
           exit 1
         end
-        registration = wrapper.client.register(contact: "mailto:" + email)
-        registration.agree_terms
+        registration = wrapper.client.new_account(contact: "mailto:" + email, terms_of_service_agreed: true)
         wrapper.log "Account created, Terms accepted"
       end
 
@@ -38,8 +37,9 @@ module Letsencrypt
       method_option :webroot_path, desc: "Path to mapped .well-known/acme-challenge folder (no subdirs will be created)", aliases: '-w', required: true
       def authorize(*domains)
         rc = 0
-        domains.each do |domain|
-          if !wrapper.authorize(domain)
+        order = wrapper.create_order(domains)
+        order.authorizations.each do |authorization|
+          if !wrapper.authorize(authorization)
             rc = 1
           end
         end
