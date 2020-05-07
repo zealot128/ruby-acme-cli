@@ -97,6 +97,7 @@ module Letsencrypt
           exit 2
         end
         authorize(*domains)
+        FileUtils.rm(@options[:private_key_path])
         cert(*domains)
       end
 
