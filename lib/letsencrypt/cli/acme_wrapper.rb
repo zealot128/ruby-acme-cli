@@ -4,6 +4,15 @@ require 'logger'
 require 'colorize'
 require_relative 'support/certificate'
 
+# fix Acme::Client::ChainIdentifier at least 2.0.9
+class Acme::Client
+  class ChainIdentifier
+    def match_name?(name)
+      issuers.last.include?("/CN=#{name}") if issuers.any?
+    end
+  end
+end
+
 class AcmeWrapper
   def initialize(options)
     @options = options
