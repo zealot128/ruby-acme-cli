@@ -97,7 +97,7 @@ class AcmeWrapper
       sleep(1)
       order.reload
     end
-    certificate = Certificate.new(order.certificate(@options[:chain]))
+    certificate = Certificate.new(order.certificate(force_chain: @options[:chain]))
     File.write(@options[:fullchain_path], certificate.fullchain_to_pem)
     File.write(@options[:chain_path], certificate.chain_to_pem)
     File.write(@options[:certificate_path], certificate.to_pem)
