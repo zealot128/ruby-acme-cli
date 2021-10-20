@@ -52,9 +52,9 @@ class AcmeWrapper
 
     challenge.request_validation
 
-    10.times do
+    30.times do
       log "Checking verification...", :debug
-      sleep 1
+      sleep 2
       challenge.reload
       break if challenge.status != 'pending'
     end
