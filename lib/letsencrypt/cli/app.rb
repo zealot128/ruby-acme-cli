@@ -8,7 +8,9 @@ module Letsencrypt
       class_option :test, desc: "Use staging url of Letsencrypt instead of production server", aliases: "-t", type: :boolean
       class_option :log_level, desc: "Log Level (debug, info, warn, error, fatal)", default: "info"
       class_option :color, desc: "Disable colorize", default: true, type: :boolean
-
+      class_option :ssl_verify, desc: "OpenSSL verify", default: true, type: :boolean
+      class_option :chain, desc: "Certificate chain", default: 'ISRG Root X1'
+  
       desc 'register EMAIL', 'Register account'
       method_option :key_length, desc: "Length of generated private key", type: :numeric, default: 4096
       def register(email)

@@ -19,7 +19,10 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency 'acme-client', '>= 2.0.0'
+  # keep faraday < 1.0.0 to support older ruby
+  spec.add_runtime_dependency 'faraday', '< 1.0.0'
+  
+  spec.add_runtime_dependency 'acme-client', '>= 2.0.7'
   spec.add_runtime_dependency 'thor'
   spec.add_runtime_dependency 'colorize'
 

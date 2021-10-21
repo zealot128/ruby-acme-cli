@@ -4,6 +4,15 @@ require 'logger'
 require 'colorize'
 require_relative 'support/certificate'
 
+# fix Acme::Client::ChainIdentifier at least 2.0.9
+class Acme::Client
+  class ChainIdentifier
+    def match_name?(name)
+      issuers.last.include?("/CN=#{name}") if issuers.any?
+    end
+  end
+end
+
 class AcmeWrapper
   def initialize(options)
     @options = options
@@ -23,7 +32,7 @@ class AcmeWrapper
   end
 
   def client
-    @client ||= Acme::Client.new(private_key: account_key, directory: directory)
+    @client ||= Acme::Client.new(private_key: account_key, directory: directory, connection_options: { ssl: { verify: @options[:ssl_verify] } })
   end
 
   def create_order(domains)
@@ -43,9 +52,9 @@ class AcmeWrapper
 
     challenge.request_validation
 
-    10.times do
+    30.times do
       log "Checking verification...", :debug
-      sleep 1
+      sleep 2
       challenge.reload
       break if challenge.status != 'pending'
     end
@@ -97,7 +106,7 @@ class AcmeWrapper
       sleep(1)
       order.reload
     end
-    certificate = Certificate.new(order.certificate)
+    certificate = Certificate.new(order.certificate(force_chain: @options[:chain]))
     File.write(@options[:fullchain_path], certificate.fullchain_to_pem)
     File.write(@options[:chain_path], certificate.chain_to_pem)
     File.write(@options[:certificate_path], certificate.to_pem)
